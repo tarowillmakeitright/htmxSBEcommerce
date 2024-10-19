@@ -12,4 +12,8 @@ public class HomeController {
     public String index(Model model) {
         return "index";
     }
+    @GetMapping("/product")
+    public String product(Model model) {
+        return "product";
+    }   
 }
