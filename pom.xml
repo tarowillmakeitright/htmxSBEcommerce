@@ -73,8 +73,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
             <artifactId>bootstrap</artifactId>
             <version>5.3.3</version>
         </dependency>
-        
         <dependency>
+            <!--MongoDB-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <!--Webjars -->
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
             <version>6.5.2</version>
