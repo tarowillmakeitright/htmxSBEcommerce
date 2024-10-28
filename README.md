@@ -12,6 +12,6 @@
 ![progress3](./images/progress3.png)
 ![progress4](./images/progress4.png)
 ![progress5](./images/progress5.png)
-- added data from MongoDB
+- added data in MongoDB
 - created Repository, Model and Service by Spring Boot to fetch the date from MongoDB.
-- obtained the data and reflected to the frontend by Thymeleaf.
+- obtained the data and showed them to the frontend by Thymeleaf.
