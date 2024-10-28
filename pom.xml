@@ -76,7 +76,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
         <dependency>
             <!--MongoDB-->
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <artifactId>
+            spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <!--env fileから変数を渡す時-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <!--Webjars -->
