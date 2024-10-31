@@ -2,22 +2,26 @@ package com.ecommerce.ecommerce;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.lang.annotation.Documented;
 import java.util.List;
 
-@Document(collection = "movies")
+@Document(collection = "anime")
 public class Anime {
+
     @Id
     private String id;
-    private String imdbId;
+
     private String title;
-    private String releaseDate;
-    private String trailerLink;
-    private List<String> genres;
-    private String poster;
-    private List<String> reviewIds;
-    private List<String> backdrops;
+    private String type;
+    private int episodes;
+    private String status;
+    private AnimeSeason animeSeason;
+    private String picture;
+    private String thumbnail;
+    private List<String> synonyms;
+    private List<String> relatedAnime;
+    private List<String> tags;
+    private List<String> sources;
+    // Getters and setters
 
     public String getId() {
         return id;
@@ -25,13 +29,6 @@ public class Anime {
 
     public void setId(String id) {
         this.id = id;
-    }
-    public String getImdbId() {
-        return imdbId;
-    }
-
-    public void setImdbId(String imdbId) {
-        this.imdbId = imdbId;
     }
 
     public String getTitle() {
@@ -42,53 +39,82 @@ public class Anime {
         this.title = title;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public String getType() {
+        return type;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getTrailerLink() {
-        return trailerLink;
+    public int getEpisodes() {
+        return episodes;
     }
 
-    public void setTrailerLink(String trailerLink) {
-        this.trailerLink = trailerLink;
+    public void setEpisodes(int episodes) {
+        this.episodes = episodes;
     }
 
-    public List<String> getGenres() {
-        return genres;
+    public String getStatus() {
+        return status;
     }
 
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getPoster() {
-        return poster;
+    public AnimeSeason getAnimeSeason() {
+        return animeSeason;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public void setAnimeSeason(AnimeSeason animeSeason) {
+        this.animeSeason = animeSeason;
     }
 
-    public List<String> getBackdrops() {
-        return backdrops;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setBackdrops(List<String> backdrops) {
-        this.backdrops = backdrops;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
-    public List<String> getReviewIds() {
-        return reviewIds;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setReviewIds(List<String> reviewIds) {
-        this.reviewIds = reviewIds;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
+    public List<String> getSynonyms() {
+        return synonyms;
+    }
 
+    public void setSynonyms(List<String> synonyms) {
+        this.synonyms = synonyms;
+    }
+
+    public List<String> getRelatedAnime() {
+        return relatedAnime;
+    }
+
+    public void setRelatedAnime(List<String> relatedAnime) {
+        this.relatedAnime = relatedAnime;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+    public List<String> getSources() {
+        return sources;
+    }
+
+    public void setSources(List<String> sources) {
+        this.sources = sources;
+    }
 }
