@@ -17,7 +17,7 @@
 - obtained the data and showed them to the frontend by Thymeleaf.
 
 ## No.3: 11/01/2024 How Things Are Going
-![progress6](./images/progress3.png)
-![progress7](./images/progress4.png)
+![progress6](./images/progress6.png)
+![progress7](./images/progress7.png)
 - inserted new data in MongoDB
 - chaged the content of model, Thyemeleaf, Controller. 
