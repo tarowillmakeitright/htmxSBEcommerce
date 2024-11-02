@@ -12,7 +12,7 @@ public class Anime {
 
     private String title;
     private String type;
-    private int episodes;
+    private Integer episodes;
     private String status;
     private AnimeSeason animeSeason;
     private String picture;
@@ -21,6 +21,7 @@ public class Anime {
     private List<String> relatedAnime;
     private List<String> tags;
     private List<String> sources;
+
     // Getters and setters
 
     public String getId() {
@@ -51,7 +52,7 @@ public class Anime {
         return episodes;
     }
 
-    public void setEpisodes(int episodes) {
+    public void setEpisodes(Integer episodes) {
         this.episodes = episodes;
     }
 
@@ -117,4 +118,5 @@ public class Anime {
     public void setSources(List<String> sources) {
         this.sources = sources;
     }
+
 }

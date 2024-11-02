@@ -2,7 +2,7 @@ package com.ecommerce.ecommerce;
 
 public class AnimeSeason {
     private String season;
-    private int year;
+    private Integer year;
 
     // Getters and setters
 
@@ -14,11 +14,11 @@ public class AnimeSeason {
         this.season = season;
     }
 
-    public int getYear() {
-        return year;
+    public Integer getYear() {
+        return year != null ? year: 0;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 }

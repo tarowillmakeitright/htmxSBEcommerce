@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Comments for ' + ${anime.title}">Comments</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+            <div class="card mb-3">
+                <img class="card-img-top" th:src="${anime.picture}" alt="anime.title">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
+                    <p class="card-text"><strong>Type:</strong> <span th:text="${anime.type != null ? anime.type : 'N/A'} ">TV</span></p>
+                    <p class="card-text"><strong>Status:</strong> <span th:text="${anime.status}">UPCOMING</span></p>
+                    <p class="card-text"><strong>Season:</strong>
+                        <span th:text="${anime.animeSeason != null && anime.animeSeason.season != 'UNDEFINED' ? anime.animeSeason.season : 'N/A'}">Season</span>
+                        <span th:text="${anime.animeSeason != null && anime.animeSeason.year != null ? anime.animeSeason.year : 'N/A'}">Year</span>
+                    </p>
+                    <p class="card-text"><p class="card-text"><strong>Related Anime:</strong>
+                        <span>
+                            <ul>
+                                <li th:each="related : ${anime.relatedAnime}">
+                                    <a th:href="${related}" target="_blank" th:text="${related}">Related Anime Link</a>
+                                </li>
+                            </ul>
+                             <p th:if="${anime.relatedAnime == null || anime.relatedAnime.isEmpty()}">N/A</p>
+                        </span>
+                     </p>
+                </div>
+            </div>
+    </div>
+</div>
+
+<!--&lt;!&ndash; コメントリストの表示 &ndash;&gt;-->
+<!--<div>-->
+<!--    <h3>Comments</h3>-->
+<!--    <ul>-->
+<!--        <li th:each="comment : ${anime.comments}">-->
+<!--            <span th:text="${comment.content}">Sample comment</span>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--    <p th:if="${anime.comments == null || anime.comments.isEmpty()}">No comments available</p>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; コメント追加フォーム &ndash;&gt;-->
+<!--<form th:action="@{/comments/add}" method="post">-->
+<!--    <input type="hidden" name="animeId" th:value="${anime.id}" />-->
+<!--    <label for="content">Add a comment:</label>-->
+<!--    <textarea id="content" name="content" required></textarea>-->
+<!--    <button type="submit">Submit</button>-->
+<!--</form>-->
+</body>
+</html>

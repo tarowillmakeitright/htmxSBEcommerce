@@ -2,7 +2,11 @@ package com.ecommerce.ecommerce;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.xml.stream.events.Comment;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AnimeService {
@@ -31,4 +35,24 @@ public class AnimeService {
     }
 
      */
+    // 特定のタグでフィルタリングされたアニメを取得
+    public List<Anime> getAnimeByTag(String tag) {
+        return animeRepository.findAll().stream()
+                .filter(anime -> anime.getTags() != null && anime.getTags().contains(tag))
+                .collect(Collectors.toList());
+    }
+
+    public Anime getAnimeById(String id) {
+        Optional<Anime> anime = animeRepository.findById(id);
+        return anime.orElse(null);  // IDに対応するアニメが見つからなければnullを返す
+    }
+
+//    public void addComment(String animeId, String content) {
+//        Anime anime = animeRepository.findById(animeId).orElse(null);
+//        if (anime != null) {
+//            Comment newComment = new Comment(content);
+//            anime.getComments().add(newComment);
+//            animeRepository.save(anime);
+//        }
+//    }
 }
