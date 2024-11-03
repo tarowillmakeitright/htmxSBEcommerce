@@ -9,30 +9,51 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="container">
-            <div class="card mb-3">
-                <img class="card-img-top" th:src="${anime.picture}" alt="anime.title">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
-                    <p class="card-text"><strong>Type:</strong> <span th:text="${anime.type != null ? anime.type : 'N/A'} ">TV</span></p>
-                    <p class="card-text"><strong>Status:</strong> <span th:text="${anime.status}">UPCOMING</span></p>
-                    <p class="card-text"><strong>Season:</strong>
-                        <span th:text="${anime.animeSeason != null && anime.animeSeason.season != 'UNDEFINED' ? anime.animeSeason.season : 'N/A'}">Season</span>
-                        <span th:text="${anime.animeSeason != null && anime.animeSeason.year != null ? anime.animeSeason.year : 'N/A'}">Year</span>
-                    </p>
-                    <p class="card-text"><p class="card-text"><strong>Related Anime:</strong>
-                        <span>
-                            <ul>
-                                <li th:each="related : ${anime.relatedAnime}">
-                                    <a th:href="${related}" target="_blank" th:text="${related}">Related Anime Link</a>
-                                </li>
-                            </ul>
-                             <p th:if="${anime.relatedAnime == null || anime.relatedAnime.isEmpty()}">N/A</p>
-                        </span>
-                     </p>
+    <div class="d-flex justify-content-center">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img th:src="${anime.picture}" class="img-fluid rounded-start" th:alt="anime.title" style="width:540px; height=540px;">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h1 class="card-title" th:text="${anime.title}">Card title</h1>
+                        <h3 class="card-text"><strong><i class="fa-solid fa-poo"></i>Type:</strong> <span th:text="${anime.type != null ? anime.type : 'N/A'} ">TV</span></h3>
+                        <h3 class="card-text"><strong><i class="fa-regular fa-face-smile"></i>Status:</strong> <span th:text="${anime.status}">UPCOMING</span></h3>
+                        <h3 class="card-text"><strong><i class="fa-solid fa-tree"></i>Season:</strong>
+                            <span th:text="${anime.animeSeason != null && anime.animeSeason.season != 'UNDEFINED' ? anime.animeSeason.season : 'N/A'}">Season</span>
+                            <span th:text="${anime.animeSeason != null && anime.animeSeason.year != null ? anime.animeSeason.year : 'N/A'}">Year</span>
+                        </h3>
+                    </div>
                 </div>
             </div>
-    </div>
+            <h3 class="card-text"><strong><i class="fa-solid fa-tags"></i>Tag:</strong>
+                <span th:if="${anime.tags != null and anime.tags.size() > 0}">
+                                    <a th:each="tag, stat : ${anime.tags}"
+                                       th:href="@{'/home/animeList/tags/' + ${#strings.replace(tag, ' ', '')}}"
+                                       th:text="${tag + (stat.last ? '' : ', ')}">
+                                    Tag
+                                    </a>
+                             </span>
+                <span th:unless="${anime.tags != null or anime.tags.size() > 0}">
+                                    Tags: No tags available
+                            </span>
+            </h3>
+
+            <h3 class="card-text"><strong><i class="fa-solid fa-hands-praying"></i>Related Anime:</strong></h3>
+            <span>
+                        <ul>
+                            <li th:each="related : ${anime.relatedAnime}">
+                                <a th:href="${related}" target="_blank" th:text="${related}">Related Anime Link</a>
+                            </li>
+                        </ul>
+                        <p th:if="${anime.relatedAnime == null || anime.relatedAnime.isEmpty()}">N/A</p>
+                        </span>
+        </div>
+        </div>
+
+
+
 </div>
 
 <!--&lt;!&ndash; コメントリストの表示 &ndash;&gt;-->
