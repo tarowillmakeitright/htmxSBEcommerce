@@ -10,48 +10,63 @@
     <title></title>
     <link rel="stylesheet" th:href="@{/css/application.css}">
     <!--Bootstrap CSS-->
-     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-     <!-- Font Awesome -->
-     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
-     <script th:src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>
-<!-- Bootstrap Bundle with Popper -->
-<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <!-- Font Awesome -->
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}"/>
+    <script th:src="@{/webjars/htmx.org/dist/htmx.min.js}"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </head>
-<body>
-  <header th:fragment="header">
-      <div class="collapse" id="navbarHeader">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-8 col-md-7 py-4">
-						<h4 >About</h4>
-						<p class="text-muted">Hello I'm Taro. I respect hacker mind.</p>
-					</div>
-					<div class="col-sm-4 offset-md-1 py-4">
-						<h4>Contact</h4>
-						<ul class="list-unstyled">
-							<li><a href="https://liff.line.me/1645278921-kWRPP32q/?accountId=452hqohr" ><i class="fa-brands fa-line"></i>Line</a></li>
-							<li><a href="https://github.com/tarowillmakeitright"><i class="fa-brands fa-github"></i>Github</a></li>
-							<li><a href="https://www.linkedin.com/in/ryutaro-maejima-74b69223b/"><i class="fa-brands fa-linkedin"></i>LinkedIn</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="navbar navbar-light bg-MediumSeaGreen shadow-sm">
-			<div class="container d-flex justify-content-between">
-				<a th:href="@{/home}"
-					class="navbar-brand d-flex align-items-center">
-<strong>S<i class="fa-solid fa-poop"></i><i class="fa-solid fa-poop"></i>T ANIME</strong>
-				</a>
+
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <div class="collapse" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4>About</h4>
+                        <p class="text-muted">Hello I'm Taro. I respect hacker mind.</p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h4>Contact</h4>
+                        <ul class="list-unstyled">
+                            <li><a href="https://liff.line.me/1645278921-kWRPP32q/?accountId=452hqohr"><i class="fa-brands fa-line"></i> Line</a></li>
+                            <li><a href="https://github.com/tarowillmakeitright"><i class="fa-brands fa-github"></i> Github</a></li>
+                            <li><a href="https://www.linkedin.com/in/ryutaro-maejima-74b69223b/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-light bg-MediumSeaGreen shadow-sm">
+            <div class="container d-flex justify-content-between">
+                <a th:href="@{/home}" class="navbar-brand d-flex align-items-center">
+                    <strong>S<i class="fa-solid fa-poop"></i><i class="fa-solid fa-poop"></i>T ANIME</strong>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarHeader" aria-controls="navbarHeader"
-        aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-</button>
-			</div>
-		</div>
-</header>
-<main layout:fragment="content">
-</main>
+                        data-bs-target="#navbarHeader" aria-controls="navbarHeader"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main layout:fragment="content" class="flex-grow-1">
+    </main>
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+      </a>
+      <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Ryutaro Maejima </span>
+    </div>
+
+    <ul class="nav col-md-3 justify-content-center list-unstyled d-flex">
+      <li class="ms-3"><a href="https://liff.line.me/1645278921-kWRPP32q/?accountId=452hqohr"><i class="fa-brands fa-line fa-2x"></i></a></li>
+      <li class="ms-3"><a href="https://github.com/tarowillmakeitright"><i class="fa-brands fa-github fa-2x"></i></a></li>
+      <li class="ms-3"><a href="https://www.linkedin.com/in/ryutaro-maejima-74b69223b/"><i class="fa-brands fa-linkedin fa-2x"></i></a></li>
+    </ul>
+  </footer>  
 </body>
 </html>

@@ -10,9 +10,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
+
+    private boolean isRed = true;
+
     @GetMapping
     public String index(Model model) {
-        return "index";
+       String color = isRed ? "red" : "blue";
+       isRed = !isRed;
+       model.addAttribute("color", color);
+      return "index";
     }
 
   @Autowired
