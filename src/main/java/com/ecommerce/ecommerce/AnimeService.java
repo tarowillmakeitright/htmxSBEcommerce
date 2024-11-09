@@ -1,9 +1,11 @@
 package com.ecommerce.ecommerce;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.xml.stream.events.Comment;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,6 +16,7 @@ public class AnimeService {
     @Autowired
     private AnimeRepository animeRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(AnimeService.class);
     // MongoDBからすべてのアニメを取得
     public List<Anime> getAllAnime() {
         return animeRepository.findAll();
@@ -46,6 +49,19 @@ public class AnimeService {
         Optional<Anime> anime = animeRepository.findById(id);
         return anime.orElse(null);  // IDに対応するアニメが見つからなければnullを返す
     }
+
+
+
+
+
+    //タグを全表示させる
+    public List<String> getAllUniqueTags() {
+       return animeRepository.findAll().stream()
+               .flatMap(anime -> anime.getTags().stream())
+               .distinct()
+               .collect(Collectors.toList());
+    }
+
 
 //    public void addComment(String animeId, String content) {
 //        Anime anime = animeRepository.findById(animeId).orElse(null);

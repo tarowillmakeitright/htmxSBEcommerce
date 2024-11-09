@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <title>Tags</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <h1>Anime Genres</h1>
+        <!-- 横並びにするためにd-flexとflex-wrapクラスを使用 -->
+        <div class="d-flex flex-wrap gap-2">
+            <div th:each="tag : ${tags}" class="col-auto">
+                <a th:href="@{'/home/animeList/tags/' + ${#strings.replace(tag, ' ', '')}}" th:text="${tag}" class="btn btn-outline-primary">Tag</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

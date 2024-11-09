@@ -31,6 +31,13 @@ public class HomeController {
         model.addAttribute("list", animeList);
         return "animeList"; // 使用するThymeleafのテンプレート名
     }
+   //タグ全表示
+    @GetMapping("/animeList/tags")
+    public String showAnimeTags(Model model) {
+        List<String> tags = animeService.getAllUniqueTags();
+        model.addAttribute("tags", tags);
+        return "tags";
+    }
     // 特定のタグでアニメをフィルタリングするメソッド
     @GetMapping("/animeList/tags/{tag}")
     public String showAnimeByTag(@PathVariable("tag") String tag, Model model) {
@@ -57,5 +64,7 @@ public class HomeController {
         // comments.htmlテンプレートに遷移
         return "comments";
     }
+
+
 
 }
