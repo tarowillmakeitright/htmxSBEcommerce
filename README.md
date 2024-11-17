@@ -21,3 +21,13 @@
 ![progress7](./images/progress7.png)
 - inserted new data in MongoDB
 - chaged the content of model, Thyemeleaf, Controller. 
+-
+## No.4: 11/18/2024 How Things Are Going
+![progress8](./images/progress8.png)
+![progress9](./images/progress9.png)
+![progress10](./images/progress10.png)
+![progress11](./images/progress11.png)
+![progress12](./images/progress12.png)
+- add google authentication 
+- create a user
+- create comment function
