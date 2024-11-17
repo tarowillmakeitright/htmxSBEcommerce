@@ -1,6 +1,8 @@
 package com.ecommerce.ecommerce;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,15 +12,11 @@ import java.util.List;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-
-    private boolean isRed = true;
-
+    @Autowired
+    private CommentService commentService; // Injected service instance
     @GetMapping
-    public String index(Model model) {
-       String color = isRed ? "red" : "blue";
-       isRed = !isRed;
-       model.addAttribute("color", color);
-      return "index";
+    public String index() {
+        return "index";
     }
 
   @Autowired
@@ -57,13 +55,44 @@ public class HomeController {
     public String showCommentsPage(@PathVariable("id") String id, Model model) {
         // AnimeオブジェクトをIDで取得
         Anime anime = animeService.getAnimeById(id);
+        // Fetch comments for this anime
+        List<Comment> comments = commentService.getCommentsByAnimeId(id);
 
-        // 取得したアニメ情報をモデルに追加
+        // Add the anime and comments to the model
         model.addAttribute("anime", anime);
+        model.addAttribute("comments", comments); // Add comments to the model
 
-        // comments.htmlテンプレートに遷移
+        // Render the comments.html template
         return "comments";
     }
+
+    //comments
+    @PostMapping("/animeList/comments/add")
+    public String addComment(@AuthenticationPrincipal OAuth2User oAuth2User,
+                             @RequestParam("animeId") String animeId,
+                             @RequestParam("content") String content) {
+        if (oAuth2User != null) {
+            String userId = oAuth2User.getAttribute("sub"); // Unique Google user ID
+            String userName = oAuth2User.getAttribute("name"); // Google user name
+            commentService.addComment(animeId, userId, userName, content);
+        }
+        return "redirect:/home/animeList/comments/" + animeId; // Redirect to comments page
+    }
+    @GetMapping("/animeList/latest")
+    public String showFall2024Anime(Model model) {
+        List<Anime> latestAnime = animeService.getAnimeBySeason("FALL", 2024);
+        model.addAttribute("list", latestAnime);
+        return "animeList"; // Reuse the animeList template for displaying results
+    }
+    @GetMapping("/animeList/season")
+    public String showAnimeBySeason(@RequestParam("season") String season, @RequestParam("year") Integer year, Model model) {
+        List<Anime> animeBySeason = animeService.getAnimeBySeason(season, year);
+        model.addAttribute("list", animeBySeason);
+        return "animeList"; // Reuse the animeList template
+    }
+
+
+
 
 
 

@@ -39,6 +39,18 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
         10.5.0</frontend-maven-plugin.npmVersion>
     </properties>
     <dependencies>
+        <!-- Spring Boot Starter Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- OAuth2 Client -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+
         <dependency>
             <!-- Thymeleaf -->
             <groupId>org.springframework.boot</groupId>
@@ -188,8 +200,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>run
-                                    build-prod</arguments>
+                                    <arguments>run-build-prod</arguments>
                                 </configuration>
                             </execution>
                         </executions>

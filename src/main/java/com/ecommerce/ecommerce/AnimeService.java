@@ -3,7 +3,6 @@ package com.ecommerce.ecommerce;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -71,4 +70,13 @@ public class AnimeService {
 //            animeRepository.save(anime);
 //        }
 //    }
+
+    public List<Anime> getAnimeBySeason(String season, Integer year) {
+        return animeRepository.findAll().stream()
+                .filter(anime -> anime.getAnimeSeason().getSeason() != null
+                        && anime.getAnimeSeason().getSeason() != null
+                        && anime.getAnimeSeason().getSeason().equalsIgnoreCase(season)
+                        && anime.getAnimeSeason().getYear().equals(year))
+                .collect(Collectors.toList());
+    }
 }
