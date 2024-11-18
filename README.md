@@ -28,6 +28,6 @@
 ![progress10](./images/progress10.png)
 ![progress11](./images/progress11.png)
 ![progress12](./images/progress12.png)
-- add google authentication 
+- add google authentication to login and logout 
 - create a user
 - create comment function
