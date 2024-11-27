@@ -28,8 +28,8 @@
                     </p>
                     <form th:action="@{/home/animeList/favorite}" method="post">
                         <input type="hidden" name="animeId" th:value="${anime.id}" />
-                        <button type="submit" class="btn btn-success mt-3">
-                            <i class="fa-solid fa-heart"></i>
+                        <button type="submit" class="btn btn-secondary mt-3">
+                            ❤️
                         </button>
                     </form>
                     <p class="card-text"><strong><i class="fa-solid fa-tags"></i>Tag:</strong>
@@ -85,7 +85,7 @@
                             <label for="content" class="form-label">Your Comment</label>
                             <textarea id="content" name="content" class="form-control" rows="4" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Submit</button>
+                        <button type="submit" class="btn btn-secondary w-100">Submit</button>
                     </form>
         </div>
 
