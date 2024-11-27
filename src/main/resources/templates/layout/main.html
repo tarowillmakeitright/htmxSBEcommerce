@@ -25,13 +25,16 @@
                 <a th:href="@{/home}" class="navbar-brand d-flex align-items-center">
                     <strong><i class="fa-solid fa-poop"></i>ANIME<i class="fa-solid fa-poop"></i></strong>
                 </a>
+                <div class="d-flex justify-content-end">
                 <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">MENU</button>
+                </div>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">   
   <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasRightLabel"><a th:href="@{/home}" class="navbar-brand d-flex align-items-center">
                     <strong><i class="fa-solid fa-poop"></i>ANIME<i class="fa-solid fa-poop"></i></strong>
                 </a></h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <button class="btn btn-info" type="button"><a th:href="@{/home/user}">User</a></button>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
     <div>
@@ -41,6 +44,7 @@
 
       <div class="d-grid gap-2">
       <br/>
+
       <button class="btn btn-secondary" type="button"><a href="#">Anime Search</a></button>
       <button class="btn btn-secondary" type="button"><a href="#">The Seasonal Anime</a></button>
       <button class="btn btn-secondary" type="button"><a href="#">Genre</a></button>

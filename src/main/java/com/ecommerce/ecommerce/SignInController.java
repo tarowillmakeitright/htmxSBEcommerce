@@ -1,13 +1,18 @@
 package com.ecommerce.ecommerce;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
 public class SignInController {
+    @Autowired
+    private AnimeService animeService;
 
     @GetMapping("login")
     public String index() {
@@ -28,11 +33,15 @@ public class SignInController {
         String pictureUrl = oAuth2User.getAttribute("picture");
         String name = oAuth2User.getAttribute("name");
         String email = oAuth2User.getAttribute("email");
+        String userId = oAuth2User.getAttribute("sub");
 
         // Add attributes to the model
         model.addAttribute("pictureUrl", pictureUrl != null ? pictureUrl : "#");
         model.addAttribute("name", name != null ? name : "Anonymous User");
         model.addAttribute("email", email != null ? email : "No Email Available");
+        model.addAttribute("userId", userId != null ? userId : "No UserId Available");
+        List<Anime> favoriteAnimeList = animeService.getFavoriteAnimeByUserId(userId);
+        model.addAttribute("favorites", favoriteAnimeList);
 
         return "user"; // Render user.html template
     }
@@ -40,4 +49,5 @@ public class SignInController {
     public String logoutSuccess() {
         return "logout-success"; // Render logout.html
     }
+
 }

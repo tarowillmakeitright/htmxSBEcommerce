@@ -15,7 +15,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers( "/login", "/logout-success", "/error").permitAll() // Public URLs
+                        .requestMatchers("/", "/login", "/home", "/webjars/**", "/css/**", "/error").permitAll() // Public URLs
                         .anyRequest().authenticated() // Protect all other URLs
                 )
                 .oauth2Login(oauth2 -> oauth2

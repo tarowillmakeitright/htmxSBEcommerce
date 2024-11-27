@@ -1,24 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
 <head>
-    <title>User Profile</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <title>Anime List</title>
 </head>
 <body>
+<div layout:fragment="content">
+
 <div class="container mt-5">
     <h1 class="text-center">User Profile</h1>
-    <div class="card mx-auto" style="max-width: 600px;">
-        <div class="card-body">
-            <div class="text-center">
-                <img th:src="${pictureUrl}" alt="Profile Picture" class="rounded-circle" style="width: 150px; height: 150px;">
-            </div>
-            <h2 class="text-center mt-3" th:text="${name}">User Name</h2>
-            <p class="text-center text-muted" th:text="${email}">User Email</p>
-            <div class="text-center mt-4">
-                <a th:href="@{/logout-success}" class="btn btn-danger">Logout</a>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <img th:src="${pictureUrl}" alt="Profile Picture" class="rounded-circle" style="width: 150px; height: 150px;">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="text-center card-title" th:text="${name}">User Name</h5>
+                        <p class="text-center card-text" th:text="${email}">Email</p>
+                        <p class="text-center card-text" th:text="${userId}">
+                            <small class="text-muted">ID</small>
+                        </p>
+                        <a class="text-center card-text btn btn-danger" th:href="@{/logout-success}">logout</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <h2>Your Favorite Anime</h2>
+
+    <!-- Check if favorites list is empty -->
+    <p th:if="${favorites == null || favorites.isEmpty()}">You have no favorite anime yet.</p>
+
+    <!-- Render anime cards only if the list is not empty -->
+    <div class="row row-cols-1 row-cols-md-6 g-4" th:if="${favorites != null && !favorites.isEmpty()}">
+        <div class="col" th:each="anime : ${favorites}">
+            <a th:href="@{/home/animeList/comments/{id}(id=${anime.id})}" class="text-decoration-none">
+                <div class="card h-100">
+                    <img th:src="${anime.picture}" class="card-img-top" th:alt="${anime.title}" />
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
+                        <p class="card-text">Episodes: <span th:text="${anime.episodes}">N/A</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 </html>

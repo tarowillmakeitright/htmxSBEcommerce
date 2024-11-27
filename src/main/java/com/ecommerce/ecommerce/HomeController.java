@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.ecommerce.ecommerce.AnimeService.logger;
+
 @Controller
 @RequestMapping("/home")
 public class HomeController {
@@ -62,6 +64,8 @@ public class HomeController {
         model.addAttribute("anime", anime);
         model.addAttribute("comments", comments); // Add comments to the model
 
+
+
         // Render the comments.html template
         return "comments";
     }
@@ -91,7 +95,17 @@ public class HomeController {
         return "animeList"; // Reuse the animeList template
     }
 
-
+    @PostMapping("/animeList/favorite")
+    public String addToFavorites(@AuthenticationPrincipal OAuth2User oAuth2User,
+                                 @RequestParam("animeId") String animeId) {
+        if (oAuth2User != null) {
+            String userId = oAuth2User.getAttribute("sub"); // Unique Google user ID
+            animeService.addFavoriteAnime(animeId, userId);
+            logger.info("Anime ID: " + animeId);
+            logger.info("User ID: " + userId);
+        }
+        return "redirect:/home/animeList/comments/" + animeId; // Redirect back to comments page
+    }
 
 
 
