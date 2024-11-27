@@ -31,3 +31,9 @@
 - add google authentication to login and logout 
 - create a user
 - create comment function
+
+## No.4: 11/28/2024 How Things Are Going
+![progress13](./images/progress13.png)
+![progress14](./images/progress14.png)
+- a user now can save his/her favorite ANIME
+
