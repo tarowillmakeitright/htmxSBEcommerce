@@ -28,10 +28,17 @@
                     </p>
                     <form th:action="@{/home/animeList/favorite}" method="post">
                         <input type="hidden" name="animeId" th:value="${anime.id}" />
-                        <button type="submit" class="btn btn-secondary mt-3">
-                            ❤️
+                        <button type="submit" class="btn btn-primary mt-3">
+                            <i class="fa-regular fa-heart" style="color: #f81281;"></i>
                         </button>
                     </form>
+                      <!-- 共有ボタン -->
+     <button class="btn btn-primary mt-3"
+        data-title="[[${anime.title}]]"
+        data-url="http://localhost:8080/home/animeList/comments/[[${anime.id}]]"
+        onclick="shareAnime(this)">
+    <i class="fa-thin fa-share"></i>
+</button>                   
                     <p class="card-text"><strong><i class="fa-solid fa-tags"></i>Tag:</strong>
                         <span th:if="${anime.tags != null and anime.tags.size() > 0}">
                                     <a th:each="tag, stat : ${anime.tags}"
