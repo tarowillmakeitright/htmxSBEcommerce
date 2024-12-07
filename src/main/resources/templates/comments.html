@@ -26,20 +26,31 @@
                         <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">N/A</span>
                         <span th:text="${anime.animeSeason?.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span>
                     </p>
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
                     <form th:action="@{/home/animeList/favorite}" method="post">
                         <input type="hidden" name="animeId" th:value="${anime.id}" />
-                        <button type="submit" class="btn btn-primary mt-3">
+                        <button type="submit" class="btn btn-secondary">
                             <i class="fa-regular fa-heart" style="color: #f81281;"></i>
                         </button>
                     </form>
-                      <!-- 共有ボタン -->
-     <button class="btn btn-primary mt-3"
-        data-title="[[${anime.title}]]"
-        data-url="http://localhost:8080/home/animeList/comments/[[${anime.id}]]"
-        onclick="shareAnime(this)">
-    <i class="fa-thin fa-share"></i>
-</button>                   
-                    <p class="card-text"><strong><i class="fa-solid fa-tags"></i>Tag:</strong>
+                        </div>
+                   <!-- <button class="btn btn-primary mt-3"
+                                th:onclick="shareAnime('${anime.title}', '${anime.id}')"
+                                        th:text="'Share ' + ${anime.title}">
+                            Share
+                   </button> -->
+                   <div class="btn-group mr-2" role="group" aria-label="Second group">
+                    <button class="btn btn-secondary"
+                            data-title="[[${anime.title}]]"
+                            onclick="shareAnime()">
+                            <i class="fa-solid fa-share"></i>
+                    </button>
+                   </div>
+                    </div>
+
+<p class="card-text"><strong><i class="fa-solid fa-tags"></i>Tag:</strong>
+
                         <span th:if="${anime.tags != null and anime.tags.size() > 0}">
                                     <a th:each="tag, stat : ${anime.tags}"
                                        th:href="@{'/home/animeList/tags/' + ${#strings.replace(tag, ' ', '')}}"
