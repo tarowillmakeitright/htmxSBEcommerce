@@ -24,19 +24,31 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String pictureUrl = oAuth2User.getAttribute("picture");
         String userId = oAuth2User.getAttribute("sub");
 
-        // Check if user already exists in MongoDB
+        // データベースにユーザーを保存または更新
         User user = userRepository.findById(userId).orElse(null);
-        if (userId == null) {
-            // Save new user to MongoDB
+        if (user == null) {
             user = new User();
-            user.setEmail(email);
-            user.setName(name);
-            user.setPictureUrl(pictureUrl);
             user.setId(userId);
+            user.setName(name);
+            user.setEmail(email);
+            user.setPictureUrl(pictureUrl);
             userRepository.save(user);
-            logger.info("New user registered: " + email);
+            logger.info("New user registered: {}", user);
         } else {
-            logger.info("Existing user logged in: " + email);
+            // ユーザー情報を更新
+            boolean updated = false;
+            if (!user.getName().equals(name)) {
+                user.setName(name);
+                updated = true;
+            }
+            if (!user.getPictureUrl().equals(pictureUrl)) {
+                user.setPictureUrl(pictureUrl);
+                updated = true;
+            }
+            if (updated) {
+                userRepository.save(user);
+                logger.info("User information updated: {}", user);
+            }
         }
 
         // Return the OAuth2User object as is

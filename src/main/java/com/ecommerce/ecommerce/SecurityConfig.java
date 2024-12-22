@@ -11,26 +11,32 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws Exception {
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login", "/home", "/webjars/**", "/css/**", "/error").permitAll() // Public URLs
-                        .anyRequest().authenticated() // Protect all other URLs
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login") // Custom login page
-                        .defaultSuccessUrl("/home", true) // Redirect after successful login
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService((OAuth2UserService<OAuth2UserRequest, OAuth2User>) customOAuth2UserService) // Custom service to process user info
-                        )
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout-success") // Endpoint for logout
-                        .invalidateHttpSession(true) // Invalidate session
-                        .deleteCookies("JSESSIONID") // Clear cookies
-                        .permitAll() // Allow access to logout for all
-                );
-        return http.build();
-    }
+        private final CustomOAuth2UserService customOAuth2UserService;
+
+        public SecurityConfig(CustomOAuth2UserService customOAuth2UserService) {
+                this.customOAuth2UserService = customOAuth2UserService;
+        }
+
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws Exception {
+                http
+                        .authorizeHttpRequests(authorize -> authorize
+                                        .requestMatchers("/", "/login", "/home", "/webjars/**", "/css/**").permitAll() // Public URLs
+                                        .anyRequest().authenticated() // Protect all other URLs
+                                        )
+                        .oauth2Login(oauth2 -> oauth2
+                                        .loginPage("/login") // Custom login page
+                                        .defaultSuccessUrl("/home", true) // Redirect after successful login
+                                        .userInfoEndpoint(userInfo -> userInfo
+                                                .userService((OAuth2UserService<OAuth2UserRequest, OAuth2User>) customOAuth2UserService) // Custom service to process user info
+                                                )
+                                    )
+                        .logout(logout -> logout
+                                        .logoutUrl("/logout-success") // Endpoint for logout
+                                        .invalidateHttpSession(true) // Invalidate session
+                                        .deleteCookies("JSESSIONID") // Clear cookies
+                                        .permitAll() // Allow access to logout for all
+                               );
+                return http.build();
+        }
 }

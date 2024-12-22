@@ -21,8 +21,10 @@ public class HomeController {
         return "index";
     }
 
-  @Autowired
+    @Autowired
     private AnimeService animeService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/animeList")
     public String showAnimeList(Model model) {
@@ -31,7 +33,7 @@ public class HomeController {
         model.addAttribute("list", animeList);
         return "animeList"; // 使用するThymeleafのテンプレート名
     }
-   //タグ全表示
+    //タグ全表示
     @GetMapping("/animeList/tags")
     public String showAnimeTags(Model model) {
         List<String> tags = animeService.getAllUniqueTags();
@@ -46,11 +48,11 @@ public class HomeController {
         model.addAttribute("selectedTag", tag); // 現在選択されているタグを表示するための変数
         return "animeList"; // animeListテンプレートを再利用
     }
-//    @PostMapping("/add")
-//    public String addComment(@RequestParam("animeId") String animeId, @RequestParam("content") String content) {
-//        animeService.addComment(animeId, content); // コメント追加処理をサービスで実行
-//        return "redirect:/comments/" + animeId; // コメントページへリダイレクト
-//    }
+    //    @PostMapping("/add")
+    //    public String addComment(@RequestParam("animeId") String animeId, @RequestParam("content") String content) {
+    //        animeService.addComment(animeId, content); // コメント追加処理をサービスで実行
+    //        return "redirect:/comments/" + animeId; // コメントページへリダイレクト
+    //    }
 
     // アニメIDに基づくコメントページ表示
     @GetMapping("/animeList/comments/{id}")
@@ -59,12 +61,10 @@ public class HomeController {
         Anime anime = animeService.getAnimeById(id);
         // Fetch comments for this anime
         List<Comment> comments = commentService.getCommentsByAnimeId(id);
-
         // Add the anime and comments to the model
         model.addAttribute("anime", anime);
         model.addAttribute("comments", comments); // Add comments to the model
-
-
+        System.out.println("Comments: " + comments);
 
         // Render the comments.html template
         return "comments";
@@ -73,14 +73,14 @@ public class HomeController {
     //comments
     @PostMapping("/animeList/comments/add")
     public String addComment(@AuthenticationPrincipal OAuth2User oAuth2User,
-                             @RequestParam("animeId") String animeId,
-                             @RequestParam("content") String content) {
-        if (oAuth2User != null) {
-            String userId = oAuth2User.getAttribute("sub"); // Unique Google user ID
-            String userName = oAuth2User.getAttribute("name"); // Google user name
-            commentService.addComment(animeId, userId, userName, content);
-        }
-        return "redirect:/home/animeList/comments/" + animeId; // Redirect to comments page
+            @RequestParam("animeId") String animeId,
+            @RequestParam("content") String content) {
+            if (oAuth2User != null) {
+                String userId = oAuth2User.getAttribute("sub"); // Unique Google user ID
+                String userName = oAuth2User.getAttribute("name"); // Google user name
+                commentService.addComment(animeId, userId, userName, content);
+            }
+            return "redirect:/home/animeList/comments/" + animeId; // Redirect to comments page
     }
     @GetMapping("/animeList/latest")
     public String showFall2024Anime(Model model) {
@@ -97,17 +97,27 @@ public class HomeController {
 
     @PostMapping("/animeList/favorite")
     public String addToFavorites(@AuthenticationPrincipal OAuth2User oAuth2User,
-                                 @RequestParam("animeId") String animeId) {
-        if (oAuth2User != null) {
-            String userId = oAuth2User.getAttribute("sub"); // Unique Google user ID
-            animeService.addFavoriteAnime(animeId, userId);
-            logger.info("Anime ID: " + animeId);
-            logger.info("User ID: " + userId);
-        }
-        return "redirect:/home/animeList/comments/" + animeId; // Redirect back to comments page
+            @RequestParam("animeId") String animeId) {
+            if (oAuth2User != null) {
+                String userId = oAuth2User.getAttribute("sub"); // Unique Google user ID
+                animeService.addFavoriteAnime(animeId, userId);
+                logger.info("Anime ID: " + animeId);
+                logger.info("User ID: " + userId);
+            }
+            return "redirect:/home/animeList/comments/" + animeId; // Redirect back to comments page
     }
 
 
-
+    @PostMapping("/animeList/favorite/delete")
+    public String removeFromFavorites(@AuthenticationPrincipal OAuth2User oAuth2User,
+            @RequestParam("animeId") String animeId) {
+            if (oAuth2User != null) {
+                String userId = oAuth2User.getAttribute("sub"); // Unique Google user ID
+                animeService.removeFavoriteAnime(animeId, userId);
+                logger.info("Removed Anime ID: " + animeId);
+                logger.info("User ID: " + userId);
+            }
+            return "redirect:/home/animeList/comments/" + animeId; // リストページにリダイレクト
+    }
 
 }

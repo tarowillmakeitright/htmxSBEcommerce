@@ -31,12 +31,18 @@ build/
 ### VS Code ###
 .vscode/
 
+
 # Excludes for npm
 node_modules
 node
 
 # env
-.env
+*.env
 
 #java
 MongoClientConnectionExample.java
+
+#log
+logs
+*.log
+*.gz

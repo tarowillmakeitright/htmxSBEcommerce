@@ -4,55 +4,86 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/main}">
 <head>
-    <title>Anime List</title>
+    <title>User Profile</title>
 </head>
 <body>
 <div layout:fragment="content">
 
-<div class="container mt-5">
-    <h1 class="text-center">User Profile</h1>
-    <div class="d-flex justify-content-center align-items-center">
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row no-gutters">
-                <div class="col-md-4">
-                    <div class="text-center">
-                        <img th:src="${pictureUrl}" alt="Profile Picture" class="rounded-circle" style="width: 150px; height: 150px;">
+    <div class="container mt-5">
+        <h1 class="text-center">User Profile</h1>
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <img th:src="${pictureUrl}" alt="Profile Picture" class="rounded-circle" style="width: 150px; height: 150px;">
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="text-center card-title" th:text="${name}">User Name</h5>
-                        <p class="text-center card-text" th:text="${email}">Email</p>
-                        <p class="text-center card-text" th:text="${userId}">
-                            <small class="text-muted">ID</small>
-                        </p>
-                        <a class="text-center card-text btn btn-danger" th:href="@{/logout-success}">logout</a>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="text-center card-title" th:text="${name}">User Name</h5>
+                            <p class="text-center card-text" th:text="${email}">Email</p>
+                            <p class="text-center card-text" th:text="${userId}">
+                                <small class="text-muted">ID</small>
+                            </p>
+                            <p class="text-center card-text">
+                                Followers: <span th:text="${followers != null ? followers.size() : 0}">0</span> |
+                                Following: <span th:text="${following != null ? following.size() : 0}">0</span>
+                            </p>
+                            <!-- Follow/Unfollow buttons -->
+                            <div class="text-center" th:if="${!isSelf}">
+<!--                                &lt;!&ndash; フォローボタン &ndash;&gt;-->
+<!--                                <form th:action="@{/users/{id}/follow(id=${user.id})}" method="post" th:if="${showFollowButton}">-->
+<!--                                    <button type="submit" class="btn btn-secondary">Follow</button>-->
+<!--                                </form>-->
+
+<!--                                &lt;!&ndash; フォロー解除ボタン &ndash;&gt;-->
+<!--                                <form th:action="@{/users/{id}/unfollow(id=${user.id})}" method="post" th:if="${showUnfollowButton}">-->
+<!--                                    <button type="submit" class="btn btn-secondary">Unfollow</button>-->
+<!--                                </form>-->
+
+                                <!-- フォローするボタン -->
+                                <form th:action="@{/users/{id}/follow(id=${userId})}" method="post" th:if="${!isFollowing}">
+                                    <button type="submit" class="btn btn-secondary">Follow</button>
+                                </form>
+
+                                <!-- フォロー解除ボタン -->
+                                <form th:action="@{/users/{id}/unfollow(id=${userId})}" method="post" th:if="${isFollowing}">
+                                    <button type="submit" class="btn btn-secondary">Unfollow</button>
+                                </form>
+                            </div>
+                            <!-- Logoutボタンを現在ログイン中のユーザーのみ表示 -->
+                            <a class="text-center card-text btn btn-danger mt-3"
+                               th:href="@{/logout-success}"
+                               th:if="${currentUserId == userId}">
+                                Logout
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <h2>Your Favorite Anime</h2>
+        <h2>Your Favorite Anime</h2>
 
-    <!-- Check if favorites list is empty -->
-    <p th:if="${favorites == null || favorites.isEmpty()}">You have no favorite anime yet.</p>
+        <!-- Check if favorites list is empty -->
+        <p th:if="${favorites == null || favorites.isEmpty()}">You have no favorite anime yet.</p>
 
-    <!-- Render anime cards only if the list is not empty -->
-    <div class="row row-cols-1 row-cols-md-6 g-4" th:if="${favorites != null && !favorites.isEmpty()}">
-        <div class="col" th:each="anime : ${favorites}">
-            <a th:href="@{/home/animeList/comments/{id}(id=${anime.id})}" class="text-decoration-none">
-                <div class="card h-100">
-                    <img th:src="${anime.picture}" class="card-img-top" th:alt="${anime.title}" />
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
-                        <p class="card-text">Episodes: <span th:text="${anime.episodes}">N/A</span></p>
+        <!-- Render anime cards only if the list is not empty -->
+        <div class="row row-cols-1 row-cols-md-6 g-4" th:if="${favorites != null && !favorites.isEmpty()}">
+            <div class="col" th:each="anime : ${favorites}">
+                <a th:href="@{/home/animeList/comments/{id}(id=${anime.id})}" class="text-decoration-none">
+                    <div class="card h-100">
+                        <img th:src="${anime.picture}" class="card-img-top" th:alt="${anime.title}" />
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
+                            <p class="card-text">Episodes: <span th:text="${anime.episodes}">N/A</span></p>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

@@ -4,10 +4,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       data-bs-theme="dark">
 
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>Anime List</title>
     <link rel="stylesheet" th:href="@{/css/application.css}">
     <!--Bootstrap CSS-->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
@@ -18,64 +18,61 @@
     <script th:src="@{/js/webShare.js}"></script>
     <!-- Bootstrap Bundle with Popper -->
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-</head>
+  </head>
 
-<body class="d-flex flex-column min-vh-100">
+  <body class="d-flex flex-column min-vh-100">
     <header>
-        <div class="navbar navbar-light bg-MediumSeaGreen shadow-sm">
-            <div class="container d-flex justify-content-between">
+      <div class="navbar navbar-light shadow-sm">
+        <div class="container d-flex justify-content-between">
+          <a th:href="@{/home}" class="navbar-brand d-flex align-items-center">
+            <strong><i class="fa-solid fa-poop"></i> ANIME <i class="fa-solid fa-poop"></i></strong>
+          </a>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">MENU</button>
+          </div>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">   
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasRightLabel">
                 <a th:href="@{/home}" class="navbar-brand d-flex align-items-center">
-                    <strong><i class="fa-solid fa-poop"></i>ANIME<i class="fa-solid fa-poop"></i></strong>
+                  <strong><i class="fa-solid fa-poop"></i> ANIME <i class="fa-solid fa-poop"></i></strong>
                 </a>
-                <div class="d-flex justify-content-end">
-                <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">MENU</button>
+              </h5>
+              <a th:if="${currentUser != null}" th:href="@{/home/user/{id}(id=${currentUser.id})}" class="btn btn-secondary">Profile</a>
+              <p th:if="${currentUser == null}" class="text-muted">
+                <a th:href="@{/login}" class="btn btn-primary">Log in</a> to view your profile.
+              </p>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div>
+                <p>Who loves Anime? </p>
+                <p>I love Anime and hope you do as well.</p> 
+                <p>I respect Hacker Mind.</p>      
+                <div class="d-grid gap-2">
+                  <a href="#" class="btn btn-secondary">Anime Search</a>
+                  <a href="#" class="btn btn-secondary">The Seasonal Anime</a>
+                  <a href="#" class="btn btn-secondary">Genre</a>
+                  <a href="#" class="btn btn-secondary">Most Popular</a>
                 </div>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">   
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasRightLabel"><a th:href="@{/home}" class="navbar-brand d-flex align-items-center">
-                    <strong><i class="fa-solid fa-poop"></i>ANIME<i class="fa-solid fa-poop"></i></strong>
-                </a></h5>
-      <button class="btn btn-info" type="button"><a th:href="@{/home/user}">User</a></button>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-  </div>
-  <div class="offcanvas-body">
-    <div>
-      <p>Who loves Anime? </p>
-      <p>I love Anime and hope you do as well.</p> 
-      <p>I respect Hacker Mind.</p>      
-
-      <div class="d-grid gap-2">
-      <br/>
-
-      <button class="btn btn-secondary" type="button"><a href="#">Anime Search</a></button>
-      <button class="btn btn-secondary" type="button"><a href="#">The Seasonal Anime</a></button>
-      <button class="btn btn-secondary" type="button"><a href="#">Genre</a></button>
-      <button class="btn btn-secondary" type="button"><a href="#">Most Popular</a></button>
-      </div>
-    </div>
-       
-    </div>
-  </div>
-
-</div>
-           </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </header>
-    <main layout:fragment="content" class="flex-grow-1">
-    </main>
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      </a>
-      <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Ryutaro Maejima </span>
-    </div>
-
-    <ul class="nav col-md-3 justify-content-center list-unstyled d-flex">
-      <li class="ms-3"><a href="https://liff.line.me/1645278921-kWRPP32q/?accountId=452hqohr"><i class="fa-brands fa-line fa-2x"></i></a></li>
-      <li class="ms-3"><a href="https://github.com/tarowillmakeitright"><i class="fa-brands fa-github fa-2x"></i></a></li>
-      <li class="ms-3"><a href="https://www.linkedin.com/in/ryutaro-maejima-74b69223b/"><i class="fa-brands fa-linkedin fa-2x"></i></a></li>
-    </ul>
-  </footer>  
-</body>
+    <main layout:fragment="content" class="flex-grow-1"></main>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+          <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+        </a>
+        <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Ryutaro Maejima </span>
+      </div>
+      <ul class="nav col-md-3 justify-content-center list-unstyled d-flex">
+        <li class="ms-3"><a href="https://liff.line.me/1645278921-kWRPP32q/?accountId=452hqohr" aria-label="LINE"><i class="fa-brands fa-line fa-2x"></i></a></li>
+        <li class="ms-3"><a href="https://github.com/tarowillmakeitright" aria-label="GitHub"><i class="fa-brands fa-github fa-2x"></i></a></li>
+        <li class="ms-3"><a href="https://www.linkedin.com/in/ryutaro-maejima-74b69223b/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin fa-2x"></i></a></li>
+      </ul>
+    </footer>  
+  </body>
 </html>
