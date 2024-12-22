@@ -32,14 +32,14 @@
 - create a user
 - create comment function
 
-## No.4: 11/28/2024 How Things Are Going
+## No.5: 11/28/2024 How Things Are Going
 ![progress13](./images/progress13.png)
 ![progress14](./images/progress14.png)
 - a user now can save his/her favorite ANIME by pushing ❤️ button. 
 
-## No.5: 12/22/2024 How Things Are Going
+## No.6: 12/22/2024 How Things Are Going
 ![progress15](./images/progress15.png)
 ![progress16](./images/progress16.png)
 ![progress17](./images/progress17.png)
-- a user can now see other user's comments and view his/her profile and fav anime. 
+- a user can now see other user's comments and view his/her profile and favorite anime. 
 
