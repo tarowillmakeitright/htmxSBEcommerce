@@ -41,5 +41,5 @@
 ![progress15](./images/progress15.png)
 ![progress16](./images/progress16.png)
 ![progress17](./images/progress17.png)
-- a user can now see other user's comments and view his/her profile and fav anime. 
+- a user can now see other user's comments and view his/her profile and favorite anime. 
 
