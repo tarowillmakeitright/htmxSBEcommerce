@@ -51,14 +51,24 @@
                                 <form th:action="@{/users/{id}/unfollow(id=${userId})}" method="post" th:if="${isFollowing}">
                                     <button type="submit" class="btn btn-secondary">Unfollow</button>
                                 </form>
+ 
                             </div>
-                            <!-- Logoutボタンを現在ログイン中のユーザーのみ表示 -->
-                            <a class="text-center card-text btn btn-danger mt-3"
-                               th:href="@{/logout-success}"
-                               th:if="${currentUserId == userId}">
-                                Logout
-                            </a>
-                        </div>
+                            <div class="text-center" th:if="${isSelf}">
+ <th:block th:if="${currentUserId != null}">
+    <a class="text-center card-text btn btn-danger mt-3"
+       th:href="@{/logout}">
+       Logout
+    </a>
+</th:block>
+
+<th:block th:if="${currentUserId == null}">
+    <a class="text-center card-text btn btn-primary mt-3"
+       th:href="@{/login}">
+       Login
+    </a>
+</th:block>
+                          </div>
+                                                  </div>
                     </div>
                 </div>
             </div>
@@ -72,7 +82,7 @@
         <!-- Render anime cards only if the list is not empty -->
         <div class="row row-cols-1 row-cols-md-6 g-4" th:if="${favorites != null && !favorites.isEmpty()}">
             <div class="col" th:each="anime : ${favorites}">
-                <a th:href="@{/home/animeList/comments/{id}(id=${anime.id})}" class="text-decoration-none">
+                <a th:href="@{/animeList/comments/{id}(id=${anime.id})}" class="text-decoration-none">
                     <div class="card h-100">
                         <img th:src="${anime.picture}" class="card-img-top" th:alt="${anime.title}" />
                         <div class="card-body">

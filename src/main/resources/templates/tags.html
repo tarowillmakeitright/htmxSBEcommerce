@@ -11,7 +11,7 @@
         <!-- 横並びにするためにd-flexとflex-wrapクラスを使用 -->
         <div class="d-flex flex-wrap gap-2">
             <div th:each="tag : ${tags}" class="col-auto">
-                <a th:href="@{'/home/animeList/tags/' + ${#strings.replace(tag, ' ', '')}}" th:text="${tag}" class="btn btn-outline-primary">Tag</a>
+                <a th:href="@{'/animeList/tags/' + ${#strings.replace(tag, ' ', '')}}" th:text="${tag}" class="btn btn-outline-primary">Tag</a>
             </div>
         </div>
     </div>

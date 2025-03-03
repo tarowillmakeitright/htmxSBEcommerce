@@ -15,7 +15,7 @@
     <div class="row row-cols-1 row-cols-md-6 g-4">
         <div th:each="anime : ${list}" class="col">
             <div class="card h-100">
-            <a th:if="${anime.sources != null and anime.sources.size() > 0}" target="_blank" th:href="@{'/home/animeList/comments/' + ${anime.id}}">
+            <a th:if="${anime.sources != null and anime.sources.size() > 0}" target="_blank" th:href="@{'/animeList/comments/' + ${anime.id}}">
                 <img class="card-img-top" th:src="${anime.picture}"  th:alt="${anime.title}">
             </a>
             <div class="card-body">
