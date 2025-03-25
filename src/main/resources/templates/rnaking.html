@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Top Ranked Anime</title>
+</head>
+<body>
+    <h2>Anime Ranking</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Title</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="anime, stat : ${rankedAnime}">
+                <td th:text="${stat.index + 1}"></td>
+                <td th:text="${anime.title}"></td>
+                <td th:text="${anime.goodVotes - anime.badVotes}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

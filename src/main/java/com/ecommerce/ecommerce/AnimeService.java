@@ -119,4 +119,28 @@ public class AnimeService {
         }
         return new ArrayList<>();
     }
+    // Anime 投票　🗳️
+    public void voteAnime(String animeId, String userId, boolean isGood) {
+        Anime anime = animeRepository.findById(animeId).orElse(null);
+        if (anime == null) {
+            return; // アニメが見つからない場合は何もしない
+        }
+       // 「いいね」なら　「いいね」に＋１
+       // 「だめ」なら「だめに＋１」　
+        if (isGood) {
+            anime.setGoodVotes(anime.getGoodVotes() + 1);
+        } else {
+            anime.setBadVotes(anime.getBadVotes() + 1);
+        }
+
+        animeRepository.save(anime); // 更新を保存
+    }
+
+    public List<Anime> getTopRankedAnime() {
+        return animeRepository.findAll().stream()
+                // 10 - 5 だったら１０はAアニメ、５はBアニメ　だから、AーB　がなりたつ
+                .sorted((a, b) -> (b.getGoodVotes() - b.getBadVotes()) - (a.getGoodVotes() - a.getBadVotes()))
+                .limit(10)
+                .collect(Collectors.toList());
+    }
 }

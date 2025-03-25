@@ -21,7 +21,15 @@ public class Anime {
     private List<String> relatedAnime;
     private List<String> tags;
     private List<String> sources;
+    private int goodVotes = 0; // 👍 の数
+    private int badVotes = 0;  // 👎 の数
 
+    // Getters and Setters
+    public int getGoodVotes() { return goodVotes; }
+    public void setGoodVotes(int goodVotes) { this.goodVotes = goodVotes; }
+
+    public int getBadVotes() { return badVotes; }
+    public void setBadVotes(int badVotes) { this.badVotes = badVotes; }
     // Getters and setters
 
     public String getId() {

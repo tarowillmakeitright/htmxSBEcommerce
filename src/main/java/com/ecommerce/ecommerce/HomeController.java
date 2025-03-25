@@ -25,9 +25,12 @@ public class HomeController {
     private AnimeService animeService;
 
     @GetMapping("/animeList")
-    public String showAnimeList(Model model) {
+    public String showAnimeList(Model model, OAuth2User oAuth2User) {
+        String currentUserId = oAuth2User.getAttribute("sub");
+
         List<Anime> animeList = animeService.getAllAnime();
         System.out.println(animeList);
+        model.addAttribute("currentUserId", currentUserId);
         model.addAttribute("list", animeList);
         return "animeList"; // 使用するThymeleafのテンプレート名
     }
@@ -107,6 +110,18 @@ public class HomeController {
         return "redirect:/home/animeList/comments/" + animeId; // Redirect back to comments page
     }
 
+   @PostMapping("/anime/{animeId}/vote")
+    public String voteAnime(@PathVariable String animeId, @RequestParam String userId, @RequestParam boolean isGood) {
+        animeService.voteAnime(animeId, userId, isGood);
+       // 白画面にならないように返してあげる。:
+         return "redirect:/home/animeList/season?season=Spring&year=2024";
+         
+    }
+
+    @GetMapping("/ranking")
+    public List<Anime> getTopRankedAnime() {
+        return animeService.getTopRankedAnime();
+    }
 
 
 

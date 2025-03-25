@@ -55,6 +55,13 @@
                     -->
                 </ul>
 
+                <!--いいねぼたん、バッドぼたん -->
+                <form th:action="@{'/home/anime/' + ${anime.id} + '/vote'}" method="post">
+                    <input type="hidden" name="userId" th:value="${currentUserId}" />
+                    <button type="submit" name="isGood" value="true" class="btn btn-success">👍 Good (<span th:text="${anime.goodVotes}">0</span>)</button>
+                    <button type="submit" name="isGood" value="false" class="btn btn-danger">👎 Bad (<span th:text="${anime.badVotes}">0</span>)</button>
+                </form> 
+
                 <div class="card-body">
                     <button type="button" class="btn btn-primary">
                         <a th:href="@{'/home/animeList/comments/' + ${anime.id}}" class="card-link">Comments</a>
