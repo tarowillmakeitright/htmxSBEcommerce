@@ -8,28 +8,27 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-md-4 g-3">
+    <div class="container mt-3">
+        <!-- SeasonとYearをループ外に移動 -->
+        <h2>Season: <span th:text="${list?.get(0)?.animeSeason?.season != 'UNDEFINED' ? list?.get(0)?.animeSeason?.season : 'N/A'}">Season</span></h2>
+        <h2>Year: <span th:text="${list?.get(0)?.animeSeason != null && list?.get(0)?.animeSeason.year != null ? list?.get(0)?.animeSeason.year : 'N/A'}">N/A</span></h2>
+    <div class="row row-cols-1 row-cols-md-6 g-4">
         <div th:each="anime : ${list}" class="col">
-            <div class="card">
-            <a th:if="${anime.sources != null and anime.sources.size() > 0}" target="_blank" th:href="${anime.sources[0]}">
-                <img class="card-img-top" th:src="${anime.picture}"  th:alt="${anime.title}" style="width:450px; height:450px;">
+            <div class="card h-100">
+            <a th:if="${anime.sources != null and anime.sources.size() > 0}" target="_blank" th:href="@{'/animeList/comments/' + ${anime.id}}">
+                <img class="card-img-top" th:src="${anime.picture}"  th:alt="${anime.title}">
             </a>
             <div class="card-body">
-                <h4 class="card-title" th:text="${anime.title}">Anime Title</h4>
-                <p class="card-text">
-                    Episodes: <span th:text="${anime.episodes != null ? anime.episodes : 'N/A'}"></span> |
-                    Status: <span th:text="${anime.status}">Finished</span> |
-                    Season: <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">Season</span> |
-                    Year: <span th:text="${anime.animeSeason != null && anime.animeSeason.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span>
-                </p>
-                </p>
-
+                <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
                 <ul class="list-group list-group-flush">
-<!--                    <li class="list-group-item" th:if="${anime.tags != null and anime.tags.size() > 0}">-->
-<!--                        Tags: <span th:text="${anime.tags != null ? #strings.join(anime.tags, ', ') : ''}">Tag List</span>-->
-<!--                    </li>-->
-                    <li class="list-group-item">
-                <span th:if="${anime.tags != null and anime.tags.size() > 0}">
+                    <li class="list-group-item">Episodes: <span th:text="${anime.episodes != null ? anime.episodes : 'N/A'}"></span></li>
+                    <li class="list-group-item">Status: <span th:text="${anime.status}">Finished</span></li> 
+                   <!-- <li class="list-group-item">Season: <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">Season</span></li> -->
+                   <!-- <li class="list-group-item">Year: <span th:text="${anime.animeSeason != null && anime.animeSeason.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span></li> -->
+                </ul>
+
+                <!-- <ul class="list-group list-group-flush"> --> 
+                <!--
                          <i class="fa-solid fa-tags"></i>Tag:
                      <a th:each="tag, stat : ${anime.tags}"
                          th:href="@{'/home/animeList/tags/' + ${#strings.replace(tag, ' ', '')}}"
@@ -41,6 +40,8 @@
                              Tags: No tags available
                         </span>
                     </li>
+
+-->
 <!--                    <li class="list-group-item" th:if="${anime.tags != null and anime.tags.size() > 0}">-->
 <!--                        Tags:-->
 <!--                        <span th:each="tag, stat : ${anime.tags}" th:text="${tag}">-->
@@ -53,6 +54,7 @@
                         <span th:each="synonym : ${anime.synonyms}" th:text="${synonym}" th:remove="tag">Synonym, </span>
                     </li>
                     -->
+<<<<<<< HEAD
                 </ul>
 
                 <!--いいねぼたん、バッドぼたん -->
@@ -64,15 +66,28 @@
 
                 <div class="card-body">
                     <button type="button" class="btn btn-primary">
+=======
+                    <!--</ul> --> 
+                <!-- the button for the comments -->
+                <!--<div class="btn-toolbar gap-2" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-secondary">
+>>>>>>> 35f76109bd9e7eb5560591818c7819fe3c6b5c4f
                         <a th:href="@{'/home/animeList/comments/' + ${anime.id}}" class="card-link">Comments</a>
                     </button>
-                    <button type="button" class="btn btn-primary" th:if="${anime.sources != null and anime.sources.size() > 0}">
+                    </div> -->
+                <!-- the buttotn for the offcial source
+                    <div class="btn-group" role="group" aria-label="Second group">
+                    <button type="button" class="btn btn-secondary" th:if="${anime.sources != null and anime.sources.size() > 0}">
                         <a th:href="${anime.sources[0]}" class="card-link">Official Source</a>
                     </button>
-                </div>
-                </div>
+                   </div>
+
+                -->
+            </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 </body>

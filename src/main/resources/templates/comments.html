@@ -3,94 +3,135 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/main}">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="'Comments for ' + ${anime.title}">Comments</title>
-</head>
-<body>
-<div layout:fragment="content" class="container mt-4">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="'Comments for ' + ${anime.title}">Comments</title>
+    </head>
+    <body>
+        <div layout:fragment="content" class="container mt-4">
 
-    <!-- Row for Cards -->
-    <div class="row g-3">
+            <!-- Row for Cards -->
+            <div class="row g-3">
 
-        <!-- Anime Details Card -->
-        <div class="col-md-4">
-            <div class="card h-100">
-                <img th:src="${anime.picture}" class="card-img-top" th:alt="${anime.title}" style="height:300px; object-fit:cover;">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
-                    <p class="card-text">
-                        <strong>Type:</strong> <span th:text="${anime.type != null ? anime.type : 'N/A'}">N/A</span><br>
-                        <strong>Status:</strong> <span th:text="${anime.status}">N/A</span><br>
-                        <strong>Season:</strong>
-                        <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">N/A</span>
-                        <span th:text="${anime.animeSeason?.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span>
-                    </p>
-                    <form th:action="@{/home/animeList/favorite}" method="post">
-                        <input type="hidden" name="animeId" th:value="${anime.id}" />
-                        <button type="submit" class="btn btn-secondary mt-3">
-                            ❤️
-                        </button>
-                    </form>
-                    <p class="card-text"><strong><i class="fa-solid fa-tags"></i>Tag:</strong>
-                        <span th:if="${anime.tags != null and anime.tags.size() > 0}">
+                <!-- Anime Details Card -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <img th:src="${anime.picture}" class="card-img-top" th:alt="${anime.title}" >
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
+                            <p class="card-text">
+                                <strong>Type:</strong> <span th:text="${anime.type != null ? anime.type : 'N/A'}">N/A</span><br>
+                                <strong>Status:</strong> <span th:text="${anime.status}">N/A</span><br>
+                                <strong>Season:</strong>
+                                <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">N/A</span>
+                                <span th:text="${anime.animeSeason?.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span>
+                            </p>
+                            <div class="btn-toolbar gap-2" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group" role="group" aria-label="First group">
+                                    <form th:action="@{/animeList/favorite}" method="post">
+                                        <input type="hidden" name="animeId" th:value="${anime.id}" />
+                                        <button type="submit" class="btn btn-secondary">
+                                            <i class="fa-regular fa-heart" style="color: #f81281;"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <!-- <button class="btn btn-primary mt-3"
+                                    th:onclick="shareAnime('${anime.title}', '${anime.id}')"
+                                    th:text="'Share ' + ${anime.title}">
+                                    Share
+                                    </button> -->
+                                    <div class="btn-group" role="group" aria-label="Second group">
+                                        <button class="btn btn-secondary"
+                                                data-title="[[${anime.title}]]"
+                                                onclick="shareAnime()">
+                                            <i class="fa-solid fa-share" style="color: #74C0FC;"></i>
+                                        </button>
+                                    </div>
+                                    <!-- Delete Favorite Button -->
+                                    <div class="btn-group" role="group" aria-label="Third group">
+                                        <form th:action="@{/animeList/favorite/delete}" method="post">
+                                            <input type="hidden" name="animeId" th:value="${anime.id}" />
+                                            <button type="submit" class="btn btn-secondary" style="color: #74C0FC;">
+                                                <i class="fa-solid fa-trash"></i> 
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="Fourth group">
+                                        <button type="button" class="btn btn-secondary" th:if="${anime.sources != null and anime.sources.size() > 0}">
+                                            <a th:href="${anime.sources[0]}" class="card-link"><i class="fa-solid fa-book" style="color: #74C0FC;"></i></a>
+                                        </button>
+                                    </div>
+                            </div>
+
+                            <p class="card-text"><strong><i class="fa-solid fa-tags"></i>Tag:</strong>
+
+                                <span th:if="${anime.tags != null and anime.tags.size() > 0}">
                                     <a th:each="tag, stat : ${anime.tags}"
-                                       th:href="@{'/home/animeList/tags/' + ${#strings.replace(tag, ' ', '')}}"
+                                       th:href="@{/animeList/tags/{tag}(tag=${#strings.replace(tag, ' ', '')})}"
                                        th:text="${tag + (stat.last ? '' : ', ')}">
-                                    Tag
+                                        Tag
                                     </a>
-                             </span>
-                        <span th:unless="${anime.tags != null or anime.tags.size() > 0}">
+                                </span>
+                                <span th:unless="${anime.tags != null or anime.tags.size() > 0}">
                                     Tags: No tags available
+                                </span>
+                            </p>
+
+                            <p class="card-text"><strong><i class="fa-solid fa-hands-praying"></i>Related Anime:</strong></p>
+                            <span>
+                                <ul>
+                                    <li th:each="related : ${anime.relatedAnime}">
+                                        <a th:href="${related}" target="_blank" th:text="${related}">Related Anime Link</a>
+                                    </li>
+                                </ul>
+                                <p th:if="${anime.relatedAnime == null || anime.relatedAnime.isEmpty()}">N/A</p>
                             </span>
-                    </p>
-
-                    <p class="card-text"><strong><i class="fa-solid fa-hands-praying"></i>Related Anime:</strong></p>
-                    <span>
-                        <ul>
-                            <li th:each="related : ${anime.relatedAnime}">
-                                <a th:href="${related}" target="_blank" th:text="${related}">Related Anime Link</a>
-                            </li>
-                        </ul>
-                        <p th:if="${anime.relatedAnime == null || anime.relatedAnime.isEmpty()}">N/A</p>
-                        </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Comments List Card -->
-        <div class="col-md-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Comments</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" th:each="comment : ${comments}">
-                            <strong th:text="${comment.userName}">User Name</strong>:
-                            <span th:text="${comment.content}">Sample Comment</span><br>
-                            <small class="text-muted" th:text="${comment.createdAt}">Timestamp</small>
-                        </li>
-                    </ul>
-                    <p class="text-muted" th:if="${comments == null || comments.isEmpty()}">No comments available.</p>
+                <!-- Comments List Card -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Comments</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item" th:each="comment : ${comments}">
+                                    <a th:if="${comment.userId != null}" th:href="@{/user/{id}(id=${comment.userId})}">
+                                        <strong th:text="${comment.userName}">User Name:</strong>
+                                    </a>
+                                    <span th:text="${comment.content}">Sample Comment</span><br>
+                                    <small class="text-muted" th:text="${comment.createdAt}">Timestamp</small>
+                                </li>
+
+                            </ul>
+                            <p th:if="${comments == null || comments.isEmpty()}">No comments yet.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Add Comment Form Card -->
-        <div class="col-md-4">
+                <!-- Add Comment Form Card -->
+                <div class="col-md-4">
                     <h5 class="card-title">Add a Comment</h5>
-                    <form th:action="@{/home/animeList/comments/add}" method="post">
+                    <form th:action="@{/animeList/comments/add}" method="post">
                         <input type="hidden" name="animeId" th:value="${anime.id}" />
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         <div class="mb-3">
                             <label for="content" class="form-label">Your Comment</label>
-                            <textarea id="content" name="content" class="form-control" rows="4" required></textarea>
+                            <textarea id="content" 
+                                      name="content" 
+                                      class="form-control" 
+                                      rows="4" 
+                                      maxlength="130" 
+                                      style="resize: none;" 
+                                      required></textarea>
                         </div>
                         <button type="submit" class="btn btn-secondary w-100">Submit</button>
                     </form>
+                </div>
+
+            </div>
+
         </div>
-
-    </div>
-
-</div>
-</body>
+    </body>
 </html>

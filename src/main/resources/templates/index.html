@@ -11,15 +11,15 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
       <div class="col d-flex align-items-start">
         <div>
-          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a href="@{/home/animeList/search}"><i class="fa-solid fa-magnifying-glass"></i> Anime Search</a></h3>
+          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a href="@{animeList/search}"><i class="fa-solid fa-magnifying-glass"></i> Anime Search</a></h3>
           <p>Find Anime By Search</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
         <div>
-          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a th:href="@{/home/animeList/latest}"><i class="fa-solid fa-book-open-reader"></i> Seasonal Anime</a></h3>
+          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a th:href="@{animeList/latest}"><i class="fa-solid fa-book-open-reader"></i> Seasonal Anime</a></h3>
             <p>Today's Anime</p>
-          <form action="/home/animeList/season" method="get">
+          <form action="animeList/season" method="get">
             <label for="season">Season:</label>
             <select name="season" id="season">
               <option value="Spring">Spring</option>
@@ -30,6 +30,7 @@
 
             <label for="year">Year:</label>
             <select name="year" id="year">
+              <option value="2025">2025</option>
               <option value="2024">2024</option>
               <option value="2023">2023</option>
               <option value="2022">2022</option>
@@ -42,13 +43,13 @@
       </div>
       <div class="col d-flex align-items-start">
         <div>
-          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a th:href="@{/home/animeList/tags}"><i class="fa-regular fa-folder-open"></i> Genres</a></h3>
+          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a th:href="@{animeList/tags}"><i class="fa-regular fa-folder-open"></i> Genres</a></h3>
           <p>Explore More Anime</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
         <div>
-          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a href="@{/home/animeList/popular}"><i class="fa-solid fa-fire"></i> Most Popular</a></h3>
+          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a href="@{animeList/popular}"><i class="fa-solid fa-fire"></i> Most Popular</a></h3>
           <p>Today's Most Pouplar Anime</p>
         </div>
       </div>
@@ -79,7 +80,7 @@
       <div class="col">
         <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('https://cdn.pixabay.com/photo/2017/07/08/09/49/sky-2483934_1280.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-            <a href="@{/home/animeList/latest}">
+            <a href="@{animeList/latest}">
             <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><i class="fa-solid fa-book-open-reader"></i> Seasonal Anime</h3>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
