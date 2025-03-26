@@ -26,9 +26,17 @@
                                 <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">N/A</span>
                                 <span th:text="${anime.animeSeason?.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span>
                             </p>
+                            
+
+                <!--いいねぼたん、バッドぼたん -->
+                <form th:action="@{'/home/anime/' + ${anime.id} + '/vote'}" method="post">
+                    <input type="hidden" name="userId" th:value="${currentUserId}" />
+                    <button type="submit" name="isGood" value="true" class="btn btn-success">👍 Good (<span th:text="${anime.goodVotes}">0</span>)</button>
+                    <button type="submit" name="isGood" value="false" class="btn btn-danger">👎 Bad (<span th:text="${anime.badVotes}">0</span>)</button>
+                </form> 
                             <div class="btn-toolbar gap-2" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="First group">
-                                    <form th:action="@{/animeList/favorite}" method="post">
+                                    <form th:action="@{/home/animeList/favorite}" method="post">
                                         <input type="hidden" name="animeId" th:value="${anime.id}" />
                                         <button type="submit" class="btn btn-secondary">
                                             <i class="fa-regular fa-heart" style="color: #f81281;"></i>
@@ -49,7 +57,7 @@
                                     </div>
                                     <!-- Delete Favorite Button -->
                                     <div class="btn-group" role="group" aria-label="Third group">
-                                        <form th:action="@{/animeList/favorite/delete}" method="post">
+                                        <form th:action="@{/home/animeList/favorite/delete}" method="post">
                                             <input type="hidden" name="animeId" th:value="${anime.id}" />
                                             <button type="submit" class="btn btn-secondary" style="color: #74C0FC;">
                                                 <i class="fa-solid fa-trash"></i> 
@@ -113,7 +121,7 @@
                 <!-- Add Comment Form Card -->
                 <div class="col-md-4">
                     <h5 class="card-title">Add a Comment</h5>
-                    <form th:action="@{/animeList/comments/add}" method="post">
+                    <form th:action="@{/home/animeList/comments/add}" method="post">
                         <input type="hidden" name="animeId" th:value="${anime.id}" />
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                         <div class="mb-3">

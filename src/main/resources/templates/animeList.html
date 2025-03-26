@@ -15,7 +15,7 @@
     <div class="row row-cols-1 row-cols-md-6 g-4">
         <div th:each="anime : ${list}" class="col">
             <div class="card h-100">
-            <a th:if="${anime.sources != null and anime.sources.size() > 0}" target="_blank" th:href="@{'/animeList/comments/' + ${anime.id}}">
+            <a th:if="${anime.sources != null and anime.sources.size() > 0}" target="_blank" th:href="@{'/home/animeList/comments/' + ${anime.id}}">
                 <img class="card-img-top" th:src="${anime.picture}"  th:alt="${anime.title}">
             </a>
             <div class="card-body">
@@ -54,19 +54,10 @@
                         <span th:each="synonym : ${anime.synonyms}" th:text="${synonym}" th:remove="tag">Synonym, </span>
                     </li>
                     -->
-<<<<<<< HEAD
-                </ul>
 
-                <!--いいねぼたん、バッドぼたん -->
-                <form th:action="@{'/home/anime/' + ${anime.id} + '/vote'}" method="post">
-                    <input type="hidden" name="userId" th:value="${currentUserId}" />
-                    <button type="submit" name="isGood" value="true" class="btn btn-success">👍 Good (<span th:text="${anime.goodVotes}">0</span>)</button>
-                    <button type="submit" name="isGood" value="false" class="btn btn-danger">👎 Bad (<span th:text="${anime.badVotes}">0</span>)</button>
-                </form> 
 
-                <div class="card-body">
-                    <button type="button" class="btn btn-primary">
-=======
+<!--                <div class="card-body">-->
+<!--                    <button type="button" class="btn btn-primary">-->
                     <!--</ul> --> 
                 <!-- the button for the comments -->
                 <!--<div class="btn-toolbar gap-2" role="toolbar" aria-label="Toolbar with button groups">
@@ -84,6 +75,7 @@
                    </div>
 
                 -->
+<!--            </div>-->
             </div>
             </div>
         </div>

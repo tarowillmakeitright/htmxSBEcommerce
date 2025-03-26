@@ -112,6 +112,7 @@ public class AnimeService {
         }
     }
 
+
     public List<Anime> getFavoriteAnimeByUserId(String userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user != null && user.getFavoriteAnimeIds() != null) {
@@ -119,7 +120,33 @@ public class AnimeService {
         }
         return new ArrayList<>();
     }
-<<<<<<< HEAD
+
+
+    public void removeFavoriteAnime(String animeId, String userId) {
+        logger.info("Looking for user with ID: " + userId);
+        User user = userRepository.findById(userId).orElse(null);
+        if (user == null) {
+            logger.error("User not found for ID: " + userId);
+            return; // 処理を中断
+        }
+        logger.info("User found: " + user.toString());
+
+        if (user.getFavoriteAnimeIds() != null && user.getFavoriteAnimeIds().contains(animeId)) {
+            user.getFavoriteAnimeIds().remove(animeId);
+            userRepository.save(user); // データベースに保存
+
+            // 保存後に確認ログを出力
+            User updatedUser = userRepository.findById(userId).orElse(null);
+            if (updatedUser != null && !updatedUser.getFavoriteAnimeIds().contains(animeId)) {
+                logger.info("Anime successfully removed from favorites: " + animeId);
+            } else {
+                logger.error("Failed to remove anime from favorites: " + animeId);
+            }
+        } else {
+            logger.info("Anime not found in favorites for user: " + userId);
+        }
+    }
+
     // Anime 投票　🗳️
     public void voteAnime(String animeId, String userId, boolean isGood) {
         Anime anime = animeRepository.findById(animeId).orElse(null);
@@ -144,31 +171,4 @@ public class AnimeService {
                 .limit(10)
                 .collect(Collectors.toList());
     }
-=======
-
-  public void removeFavoriteAnime(String animeId, String userId) {
-    logger.info("Looking for user with ID: " + userId);
-    User user = userRepository.findById(userId).orElse(null);
-    if (user == null) {
-        logger.error("User not found for ID: " + userId);
-        return; // 処理を中断
-    }
-    logger.info("User found: " + user.toString());
-
-    if (user.getFavoriteAnimeIds() != null && user.getFavoriteAnimeIds().contains(animeId)) {
-        user.getFavoriteAnimeIds().remove(animeId);
-        userRepository.save(user); // データベースに保存
-
-        // 保存後に確認ログを出力
-        User updatedUser = userRepository.findById(userId).orElse(null);
-        if (updatedUser != null && !updatedUser.getFavoriteAnimeIds().contains(animeId)) {
-            logger.info("Anime successfully removed from favorites: " + animeId);
-        } else {
-            logger.error("Failed to remove anime from favorites: " + animeId);
-        }
-    } else {
-        logger.info("Anime not found in favorites for user: " + userId);
-    }
-}
->>>>>>> 35f76109bd9e7eb5560591818c7819fe3c6b5c4f
 }

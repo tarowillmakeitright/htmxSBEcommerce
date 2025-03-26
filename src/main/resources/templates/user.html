@@ -82,7 +82,7 @@
         <!-- Render anime cards only if the list is not empty -->
         <div class="row row-cols-1 row-cols-md-6 g-4" th:if="${favorites != null && !favorites.isEmpty()}">
             <div class="col" th:each="anime : ${favorites}">
-                <a th:href="@{/animeList/comments/{id}(id=${anime.id})}" class="text-decoration-none">
+                <a th:href="@{/home/animeList/comments/{id}(id=${anime.id})}" class="text-decoration-none">
                     <div class="card h-100">
                         <img th:src="${anime.picture}" class="card-img-top" th:alt="${anime.title}" />
                         <div class="card-body">
