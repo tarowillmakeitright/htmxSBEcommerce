@@ -3,9 +3,7 @@ package com.ecommerce.ecommerce;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Document(collection = "users")
 public class User {
@@ -21,7 +19,9 @@ public class User {
     private Set<String> following = new HashSet<>(); // 自分がフォローしているユーザーのID
     
     private boolean isFollowing;
-    
+    // animeId → true = Good, false = Bad
+    private Map<String, Boolean> votedAnime = new HashMap<>();
+
     // Getters and Setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
@@ -31,6 +31,14 @@ public class User {
     public void setName(String name) { this.name = name; }
     public String getPictureUrl() { return pictureUrl; }
     public void setPictureUrl(String pictureUrl) { this.pictureUrl = pictureUrl; }
+   
+     public Map<String, Boolean> getVotedAnime() {
+        return votedAnime;
+    }
+
+    public void setVotedAnime(Map<String, Boolean> votedAnime) {
+        this.votedAnime = votedAnime;
+    }
 
     public List<String> getFavoriteAnimeIds() {
         return favoriteAnimeIds;

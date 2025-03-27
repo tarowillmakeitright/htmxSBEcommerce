@@ -26,14 +26,27 @@
                                 <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">N/A</span>
                                 <span th:text="${anime.animeSeason?.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span>
                             </p>
-                            
 
-                <!--いいねぼたん、バッドぼたん -->
-                <form th:action="@{'/home/anime/' + ${anime.id} + '/vote'}" method="post">
-                    <input type="hidden" name="userId" th:value="${currentUserId}" />
-                    <button type="submit" name="isGood" value="true" class="btn btn-success">👍 Good (<span th:text="${anime.goodVotes}">0</span>)</button>
-                    <button type="submit" name="isGood" value="false" class="btn btn-danger">👎 Bad (<span th:text="${anime.badVotes}">0</span>)</button>
-                </form> 
+
+                            <th:block th:if="${not #maps.containsKey(userVotedAnime, anime.id)}">
+                                <form th:action="@{'/home/anime/' + ${anime.id} + '/vote'}" method="post">
+                                    <input type="hidden" name="userId" th:value="${currentUserId}" />
+                                    <button type="submit" name="isGood" value="true" class="btn btn-success">
+                                        👍 Good (<span th:text="${anime.goodVotes}">0</span>)
+                                    </button>
+                                    <button type="submit" name="isGood" value="false" class="btn btn-danger">
+                                        👎 Bad (<span th:text="${anime.badVotes}">0</span>)
+                                    </button>
+                                </form>
+                            </th:block>
+
+                            <th:block th:if="${userVotedAnime[anime.id] == true}">
+                                <p>Already Voted: 👍 Good</p>
+                            </th:block>
+                            <th:block th:if="${userVotedAnime[anime.id] == false}">
+                                <p>Already Voted: 👎 Bad</p>
+                            </th:block>
+
                             <div class="btn-toolbar gap-2" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="First group">
                                     <form th:action="@{/home/animeList/favorite}" method="post">
@@ -105,7 +118,7 @@
                             <h5 class="card-title">Comments</h5>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" th:each="comment : ${comments}">
-                                    <a th:if="${comment.userId != null}" th:href="@{/user/{id}(id=${comment.userId})}">
+                                    <a th:if="${comment.userId != null}" th:href="@{/home//user/{id}(id=${comment.userId})}">
                                         <strong th:text="${comment.userName}">User Name:</strong>
                                     </a>
                                     <span th:text="${comment.content}">Sample Comment</span><br>

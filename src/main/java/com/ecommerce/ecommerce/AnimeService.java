@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,7 @@ public class AnimeService {
     @Autowired
     private UserRepository userRepository;
     static final Logger logger = LoggerFactory.getLogger(AnimeService.class);
+
     // MongoDBからすべてのアニメを取得
     public List<Anime> getAllAnime() {
         return animeRepository.findAll();
@@ -149,10 +151,17 @@ public class AnimeService {
 
     // Anime 投票　🗳️
     public void voteAnime(String animeId, String userId, boolean isGood) {
+        User user = userRepository.findById(userId).orElse(null);
         Anime anime = animeRepository.findById(animeId).orElse(null);
-        if (anime == null) {
-            return; // アニメが見つからない場合は何もしない
-        }
+
+
+
+        Map<String, Boolean> voted = user.getVotedAnime();
+    if (voted.containsKey(animeId)) {
+        logger.info("User already voted on anime: " + animeId);
+        return; // すでに投票済みなら何もしない
+    }
+
        // 「いいね」なら　「いいね」に＋１
        // 「だめ」なら「だめに＋１」　
         if (isGood) {
@@ -161,7 +170,16 @@ public class AnimeService {
             anime.setBadVotes(anime.getBadVotes() + 1);
         }
 
-        animeRepository.save(anime); // 更新を保存
+        // ユーザーの投票履歴を記録
+    voted.put(animeId, isGood);
+    user.setVotedAnime(voted);
+
+    // 保存
+    animeRepository.save(anime);
+    userRepository.save(user);
+
+    logger.info("User {} voted {} on anime {}", userId, isGood ? "GOOD" : "BAD", animeId);
+
     }
 
     public List<Anime> getTopRankedAnime() {

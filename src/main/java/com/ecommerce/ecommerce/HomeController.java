@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.ecommerce.ecommerce.AnimeService.logger;
@@ -23,6 +24,10 @@ public class HomeController {
 
   @Autowired
     private AnimeService animeService;
+
+    @Autowired
+    private UserRepository userRepository;
+
 
     @GetMapping("/animeList")
     public String showAnimeList(Model model) {
@@ -54,19 +59,20 @@ public class HomeController {
 
     // アニメIDに基づくコメントページ表示
     @GetMapping("/animeList/comments/{id}")
-    public String showCommentsPage(@PathVariable("id") String id, Model model) {
-        // AnimeオブジェクトをIDで取得
+    public String showCommentsPage(@PathVariable("id") String id,
+                                   @AuthenticationPrincipal OAuth2User oAuth2User,
+                                   Model model) {
+        String currentUserId = oAuth2User != null ? oAuth2User.getAttribute("sub") : null;
+        User user = currentUserId != null ? userRepository.findById(currentUserId).orElse(null) : null;
+
         Anime anime = animeService.getAnimeById(id);
-        // Fetch comments for this anime
         List<Comment> comments = commentService.getCommentsByAnimeId(id);
 
-        // Add the anime and comments to the model
         model.addAttribute("anime", anime);
-        model.addAttribute("comments", comments); // Add comments to the model
+        model.addAttribute("comments", comments);
+        model.addAttribute("currentUserId", currentUserId);
+        model.addAttribute("userVotedAnime", user != null ? user.getVotedAnime() : new HashMap<>());
 
-
-
-        // Render the comments.html template
         return "comments";
     }
 
@@ -116,7 +122,7 @@ public class HomeController {
                 logger.info("Removed Anime ID: " + animeId);
                 logger.info("User ID: " + userId);
             }
-            return "redirect:/home/animeList/comments/" + animeId; // リストページにリダイレクト
+            return "redirect:/animeList/comments/" + animeId; // リストページにリダイレクト
     }
 
    @PostMapping("/anime/{animeId}/vote")
