@@ -118,7 +118,7 @@
                             <h5 class="card-title">Comments</h5>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" th:each="comment : ${comments}">
-                                    <a th:if="${comment.userId != null}" th:href="@{/home//user/{id}(id=${comment.userId})}">
+                                    <a th:if="${comment.userId != null}" th:href="@{/user/{id}(id=${comment.userId})}">
                                         <strong th:text="${comment.userName}">User Name:</strong>
                                     </a>
                                     <span th:text="${comment.content}">Sample Comment</span><br>
