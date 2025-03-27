@@ -1,19 +1,4 @@
-package com.ecommerce.ecommerce;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-
-import static com.ecommerce.ecommerce.AnimeService.logger;
-
-@Controller
-@RequestMapping("/home")
+package com.ecommerce.ecommerce; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.security.core.annotation.AuthenticationPrincipal; import org.springframework.security.oauth2.core.user.OAuth2User; import org.springframework.stereotype.Controller; import org.springframework.ui.Model; import org.springframework.web.bind.annotation.*; import java.util.HashMap; import java.util.List; import static com.ecommerce.ecommerce.AnimeService.logger; @Controller @RequestMapping("/home")
 public class HomeController {
     @Autowired
     private CommentService commentService; // Injected service instance
@@ -131,11 +116,12 @@ public class HomeController {
         return "redirect:/home/animeList/comments/" + animeId; 
     }
 
-    @GetMapping("/ranking")
-    public List<Anime> getTopRankedAnime() {
-        return animeService.getTopRankedAnime();
-    }
-
-
+    
+    @GetMapping("/animeList/ranking")
+public String showRanking(Model model) {
+    List<Anime> topRankedAnime = animeService.getTopRankedAnime();
+    model.addAttribute("list", topRankedAnime);
+    return "rankingAnime"; // ← このファイルを作る！
+}
 
 }

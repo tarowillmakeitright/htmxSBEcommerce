@@ -154,8 +154,6 @@ public class AnimeService {
         User user = userRepository.findById(userId).orElse(null);
         Anime anime = animeRepository.findById(animeId).orElse(null);
 
-
-
         Map<String, Boolean> voted = user.getVotedAnime();
     if (voted.containsKey(animeId)) {
         logger.info("User already voted on anime: " + animeId);

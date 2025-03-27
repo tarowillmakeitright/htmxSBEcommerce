@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Ranked Anime</title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-4">
+    <h2 class="mb-4">🏆 Top Ranked Anime</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        <div th:each="anime, stat : ${list}" class="col">
+            <div class="card h-100">
+                <a th:href="@{'/home/animeList/comments/' + ${anime.id}}" target="_blank">
+                    <img class="card-img-top" th:src="${anime.picture}" th:alt="${anime.title}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <span class="badge bg-warning text-dark">#<span th:text="${stat.index + 1}">1</span></span>
+                        <span th:text="${anime.title}">Anime Title</span>
+                    </h5>
+                    <p class="card-text">
+                        <strong>Votes:</strong>
+                        👍 <span th:text="${anime.goodVotes}">0</span>
+                        &nbsp;
+                        👎 <span th:text="${anime.badVotes}">0</span><br>
+                        <strong>Score:</strong>
+                        <span th:text="${anime.goodVotes - anime.badVotes}">0</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
