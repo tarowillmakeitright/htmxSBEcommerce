@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-4">
+    <h2>Search Results for "<span th:text="${query}">query</span>"</h2>
+
+    <div class="row row-cols-1 row-cols-md-5 g-4 mt-3">
+        <div class="col" th:each="anime : ${list}">
+            <div class="card h-100">
+                <a th:href="@{'/home/animeList/comments/' + ${anime.id}}">
+                    <img class="card-img-top" th:src="${anime.picture}" th:alt="${anime.title}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

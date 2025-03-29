@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -186,5 +187,15 @@ public class AnimeService {
                 .sorted((a, b) -> (b.getGoodVotes() - b.getBadVotes()) - (a.getGoodVotes() - a.getBadVotes()))
                 .limit(100)
                 .collect(Collectors.toList());
+    }
+   //searh anime
+   public List<Anime> searchAnimeByTitle(String query) {
+    Pattern pattern = Pattern.compile(Pattern.quote(query), Pattern.CASE_INSENSITIVE);
+    return animeRepository.findAll().stream()
+            .filter(anime ->
+                (anime.getTitle() != null && pattern.matcher(anime.getTitle()).find()) ||
+                (anime.getSynonyms() != null && anime.getSynonyms().stream().anyMatch(syn -> pattern.matcher(syn).find()))
+            )
+            .collect(Collectors.toList());
     }
 }

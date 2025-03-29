@@ -11,8 +11,12 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
       <div class="col d-flex align-items-start">
         <div>
-          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a th:href="@{/home/animeList/search}"><i class="fa-solid fa-magnifying-glass"></i> Anime Search</a></h3>
+          <h3 class="fw-bold mb-0 fs-4 text-body-emphasis"><a th:href="@{/home/animeList/searchResults}"><i class="fa-solid fa-magnifying-glass"></i> Anime Search</a></h3>
           <p>Find Anime By Search</p>
+          <form class="d-flex" th:action="@{/home/animeList/searchResults}" method="get">
+           <input class="form-control me-2" type="search" name="query" placeholder="Search anime..." aria-label="Search" required>
+           <button class="btn btn-outline-success" type="submit">Search</button>
+         </form>
         </div>
       </div>
       <div class="col d-flex align-items-start">
@@ -64,6 +68,12 @@
               <li class="me-auto">
                 <i class="fa-solid fa-joint"></i>
               </li>
+              <li class="me-auto">
+              <form class="d-flex" th:action="@{/home/animeList/searchResults}" method="get">
+                <input class="form-control me-2" type="search" name="query" placeholder="Search anime..." aria-label="Search" required>
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+              </li>
               <li class="d-flex align-items-center me-3">
                 <small>Find Anime By Search</small>
               </li>
@@ -99,7 +109,7 @@
       <div class="col">
         <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('https://cdn.pixabay.com/photo/2023/02/25/20/26/abstract-7814184_1280.jpg');">
           <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-            <a th:href="@{/home}">
+            <a th:href="@{/animeList/tags}">
             <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold"><i class="fa-regular fa-folder-open"></i> Find By Genres</h3>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">

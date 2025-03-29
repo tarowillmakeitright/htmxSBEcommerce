@@ -130,10 +130,18 @@ public class HomeController {
 
     
     @GetMapping("/animeList/ranking")
-public String showRanking(Model model) {
-    List<Anime> topRankedAnime = animeService.getTopRankedAnime();
-    model.addAttribute("list", topRankedAnime);
-    return "rankingAnime"; // ← このファイルを作る！
-}
+    public String showRanking(Model model) {
+        List<Anime> topRankedAnime = animeService.getTopRankedAnime();
+        model.addAttribute("list", topRankedAnime);
+        return "rankingAnime"; // ← このファイルを作る！
+    }
+
+     @GetMapping("/animeList/searchResults")
+     public String searchAnime(@RequestParam("query") String query, Model model) {
+         List<Anime> searchResults = animeService.searchAnimeByTitle(query);
+         model.addAttribute("list", searchResults);
+         model.addAttribute("query", query);
+         return "searchResults";
+     }
 
 }

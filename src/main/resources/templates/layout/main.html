@@ -46,14 +46,36 @@
 					</div>
 					<div class="offcanvas-body">
 						<div>
-							<p>Who loves Anime? </p>
-							<p>I love Anime and hope you do as well.</p>
-							<p>I respect Hacker Mind.</p>
+							<p>Respect Hacker Mind</p>
 							<div class="d-grid gap-2">
-								<a href="#" class="btn btn-secondary">Anime Search</a>
-								<a href="#" class="btn btn-secondary">The Seasonal Anime</a>
-								<a href="#" class="btn btn-secondary">Genre</a>
-								<a href="#" class="btn btn-secondary">Most Popular</a>
+							<form class="d-flex" th:action="@{/home/animeList/searchResults}" method="get">
+                              <input class="form-control me-2" type="search" name="query" placeholder="Search anime..." aria-label="Search" required>
+                              <button class="btn btn-outline-success" type="submit">Search</button>
+                            </form>
+                            <p>Today's Anime</p>
+                                  <form th:action="@{/home/animeList/season}" method="get">
+                                  <label for="season">Season:</label>
+                                  <select name="season" id="season">
+                                    <option value="SPRING">Spring</option>
+                                    <option value="SUMMER">Summer</option>
+                                    <option value="FALL">Fall</option>
+                                    <option value="WINTER">Winter</option>
+                                  </select>
+                           
+                                  <label for="year">Year:</label>
+                                  <select name="year" id="year">
+                                    <option value="2025">2025</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <!-- Add more years as needed -->
+                                  </select>
+                           
+                                      <button type="submit" class="btn btn-primary">View Anime</button>
+                                    </form>
+
+								<a th:href="@{/home/animeList/tags}" class="btn btn-secondary">Genre</a>
+								<a th:href="@{/home/animeList/ranking}" class="btn btn-secondary">Most Popular</a>
 							</div>
 						</div>
 					</div>
