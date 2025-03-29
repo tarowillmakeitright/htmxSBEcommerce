@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Anime tagged with ' + ${selectedTag}">Tagged Anime</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-3">
+        <h2>Tag: <span th:text="${selectedTag}">Tag Name</span></h2>
+
+        <div class="row row-cols-1 row-cols-md-6 g-4">
+            <div th:each="anime : ${list}" class="col">
+                <div class="card h-100">
+                    <a th:if="${anime.sources != null and !anime.sources.isEmpty()}"
+                       th:href="@{'/home/animeList/comments/' + ${anime.id}}" target="_blank">
+                        <img class="card-img-top" th:src="${anime.picture}" th:alt="${anime.title}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${anime.title}">Anime Title</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                Episodes: <span th:text="${anime.episodes != null ? anime.episodes : 'N/A'}">N/A</span>
+                            </li>
+                            <li class="list-group-item">
+                                Status: <span th:text="${anime.status != null ? anime.status : 'N/A'}">N/A</span>
+                            </li>
+                            <li class="list-group-item">
+                                Season: <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">N/A</span>
+                            </li>
+                            <li class="list-group-item">
+                                Year: <span th:text="${anime.animeSeason?.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

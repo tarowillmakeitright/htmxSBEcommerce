@@ -76,13 +76,13 @@ public class AnimeService {
 //    }
 
     public List<Anime> getAnimeBySeason(String season, Integer year) {
-        return animeRepository.findAll().stream()
-                .filter(anime -> anime.getAnimeSeason().getSeason() != null
-                        && anime.getAnimeSeason().getSeason() != null
-                        && anime.getAnimeSeason().getSeason().equalsIgnoreCase(season)
-                        && anime.getAnimeSeason().getYear().equals(year))
-                .collect(Collectors.toList());
-    }
+    return animeRepository.findAll().stream()
+            .filter(anime -> anime.getAnimeSeason() != null &&
+                    anime.getAnimeSeason().getSeason() != null &&
+                    anime.getAnimeSeason().getYear() != null &&
+                    anime.getAnimeSeason().getYear().equals(year))
+            .collect(Collectors.toList());
+}
 
     public void addFavoriteAnime(String animeId, String userId) {
         logger.info("Looking for user with ID: " + userId);
@@ -184,7 +184,7 @@ public class AnimeService {
         return animeRepository.findAll().stream()
                 // 10 - 5 だったら１０はAアニメ、５はBアニメ　だから、AーB　がなりたつ
                 .sorted((a, b) -> (b.getGoodVotes() - b.getBadVotes()) - (a.getGoodVotes() - a.getBadVotes()))
-                .limit(10)
+                .limit(100)
                 .collect(Collectors.toList());
     }
 }

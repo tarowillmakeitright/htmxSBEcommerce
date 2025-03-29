@@ -5,14 +5,10 @@
       layout:decorate="~{layout/main}">
     <head>
         <meta charset="UTF-8">
-        <title th:text="'Comments for ' + ${anime.title}">Comments</title>
+        <title th:text="${title} ?: 'Anime App'">Anime App</title>
     </head>
     <body>
-        <div layout:fragment="content" class="container mt-4">
-
-            <!-- Row for Cards -->
-            <div class="row g-3">
-
+        <div layout:fragment="content" class="row g-3 justify-content-center">
                 <!-- Anime Details Card -->
                 <div class="col-md-4">
                     <div class="card h-100">
@@ -25,29 +21,24 @@
                                 <strong>Season:</strong>
                                 <span th:text="${anime.animeSeason?.season != 'UNDEFINED' ? anime.animeSeason?.season : 'N/A'}">N/A</span>
                                 <span th:text="${anime.animeSeason?.year != null ? anime.animeSeason.year : 'N/A'}">N/A</span>
-                            </p>
-
-
-                            <th:block th:if="${not #maps.containsKey(userVotedAnime, anime.id)}">
-                                <form th:action="@{'/home/anime/' + ${anime.id} + '/vote'}" method="post">
-                                    <input type="hidden" name="userId" th:value="${currentUserId}" />
-                                    <button type="submit" name="isGood" value="true" class="btn btn-success">
+                                <th:block th:if="${not #maps.containsKey(userVotedAnime, anime.id)}">
+                                    <form th:action="@{'/home/anime/' + ${anime.id} + '/vote'}" method="post">
+                                     <input type="hidden" name="userId" th:value="${currentUserId}" />
+                                      <button type="submit" name="isGood" value="true" class="btn btn-success">
                                         👍 Good (<span th:text="${anime.goodVotes}">0</span>)
-                                    </button>
-                                    <button type="submit" name="isGood" value="false" class="btn btn-danger">
+                                      </button>
+                                      <button type="submit" name="isGood" value="false" class="btn btn-danger">
                                         👎 Bad (<span th:text="${anime.badVotes}">0</span>)
-                                    </button>
-                                </form>
-                            </th:block>
-
-                            <th:block th:if="${userVotedAnime[anime.id] == true}">
-                                <p>Already Voted: 👍 Good</p>
-                            </th:block>
-                            <th:block th:if="${userVotedAnime[anime.id] == false}">
-                                <p>Already Voted: 👎 Bad</p>
-                            </th:block>
-
-                            <div class="btn-toolbar gap-2" role="toolbar" aria-label="Toolbar with button groups">
+                                      </button>
+                                    </form>
+                                </th:block>
+                                
+                                <th:block th:if="${#maps.containsKey(userVotedAnime, anime.id)}">
+                                    <p>Already Voted: <span th:text="${userVotedAnime[anime.id] ? '👍 Good' : '👎 Bad'}"></span></p>
+                                </th:block>
+                            </p>
+    
+                      <div class="btn-toolbar gap-2" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="First group">
                                     <form th:action="@{/home/animeList/favorite}" method="post">
                                         <input type="hidden" name="animeId" th:value="${anime.id}" />
@@ -56,11 +47,6 @@
                                         </button>
                                     </form>
                                 </div>
-                                <!-- <button class="btn btn-primary mt-3"
-                                    th:onclick="shareAnime('${anime.title}', '${anime.id}')"
-                                    th:text="'Share ' + ${anime.title}">
-                                    Share
-                                    </button> -->
                                     <div class="btn-group" role="group" aria-label="Second group">
                                         <button class="btn btn-secondary"
                                                 data-title="[[${anime.title}]]"
@@ -82,20 +68,20 @@
                                             <a th:href="${anime.sources[0]}" class="card-link"><i class="fa-solid fa-book" style="color: #74C0FC;"></i></a>
                                         </button>
                                     </div>
-                            </div>
+
 
                             <p class="card-text"><strong><i class="fa-solid fa-tags"></i>Tag:</strong>
 
                                 <span th:if="${anime.tags != null and anime.tags.size() > 0}">
                                     <a th:each="tag, stat : ${anime.tags}"
-                                       th:href="@{/animeList/tags/{tag}(tag=${#strings.replace(tag, ' ', '')})}"
+                                       th:href="@{/home/animeList/tags/{tag}(tag=${#strings.replace(tag, ' ', '')})}"
                                        th:text="${tag + (stat.last ? '' : ', ')}">
                                         Tag
                                     </a>
                                 </span>
-                                <span th:unless="${anime.tags != null or anime.tags.size() > 0}">
+                                <span th:unless="${anime.tags != null and !#lists.isEmpty(anime.tags)}">
                                     Tags: No tags available
-                                </span>
+                                </span> 
                             </p>
 
                             <p class="card-text"><strong><i class="fa-solid fa-hands-praying"></i>Related Anime:</strong></p>
@@ -108,8 +94,10 @@
                                 <p th:if="${anime.relatedAnime == null || anime.relatedAnime.isEmpty()}">N/A</p>
                             </span>
                         </div>
+                        </div>
                     </div>
                 </div>
+
 
                 <!-- Comments List Card -->
                 <div class="col-md-4">
@@ -150,9 +138,6 @@
                         <button type="submit" class="btn btn-secondary w-100">Submit</button>
                     </form>
                 </div>
-
             </div>
-
-        </div>
     </body>
 </html>

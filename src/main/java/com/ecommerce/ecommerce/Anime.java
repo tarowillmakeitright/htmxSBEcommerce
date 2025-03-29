@@ -23,7 +23,15 @@ public class Anime {
     private List<String> sources;
     private int goodVotes = 0; // 👍 の数
     private int badVotes = 0;  // 👎 の数
+    private Score score; // ← 追加
 
+    public Score getScore() {
+        return score;
+    }
+    
+    public void setScore(Score score) {
+        this.score = score;
+    }
     // Getters and Setters
     public int getGoodVotes() { return goodVotes; }
     public void setGoodVotes(int goodVotes) { this.goodVotes = goodVotes; }

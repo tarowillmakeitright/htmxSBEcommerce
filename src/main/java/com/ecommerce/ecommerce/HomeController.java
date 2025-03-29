@@ -1,4 +1,15 @@
-package com.ecommerce.ecommerce; import org.springframework.beans.factory.annotation.Autowired; import org.springframework.security.core.annotation.AuthenticationPrincipal; import org.springframework.security.oauth2.core.user.OAuth2User; import org.springframework.stereotype.Controller; import org.springframework.ui.Model; import org.springframework.web.bind.annotation.*; import java.util.HashMap; import java.util.List; import static com.ecommerce.ecommerce.AnimeService.logger; @Controller @RequestMapping("/home")
+package com.ecommerce.ecommerce; 
+import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.security.core.annotation.AuthenticationPrincipal; 
+import org.springframework.security.oauth2.core.user.OAuth2User; 
+import org.springframework.stereotype.Controller; 
+import org.springframework.ui.Model; 
+import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.List;
+import static com.ecommerce.ecommerce.AnimeService.logger;
+@Controller
+@RequestMapping("/home")
 public class HomeController {
     @Autowired
     private CommentService commentService; // Injected service instance
@@ -34,9 +45,10 @@ public class HomeController {
         List<Anime> animeListByTag = animeService.getAnimeByTag(tag);
         model.addAttribute("list", animeListByTag);
         model.addAttribute("selectedTag", tag); // 現在選択されているタグを表示するための変数
-        return "animeList"; // animeListテンプレートを再利用
+        return "showAnimeByTag"; 
     }
-//    @PostMapping("/add")
+
+    // @PostMapping("/add")
 //    public String addComment(@RequestParam("animeId") String animeId, @RequestParam("content") String content) {
 //        animeService.addComment(animeId, content); // コメント追加処理をサービスで実行
 //        return "redirect:/comments/" + animeId; // コメントページへリダイレクト
