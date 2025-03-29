@@ -78,12 +78,16 @@ public class AnimeService {
 
     public List<Anime> getAnimeBySeason(String season, Integer year) {
     return animeRepository.findAll().stream()
-            .filter(anime -> anime.getAnimeSeason() != null &&
-                    anime.getAnimeSeason().getSeason() != null &&
-                    anime.getAnimeSeason().getYear() != null &&
-                    anime.getAnimeSeason().getYear().equals(year))
-            .collect(Collectors.toList());
-}
+        .filter(anime -> {
+            AnimeSeason animeSeason = anime.getAnimeSeason();
+            return animeSeason != null &&
+                   animeSeason.getSeason() != null &&
+                   animeSeason.getSeason().equalsIgnoreCase(season) &&
+                   animeSeason.getYear() != null &&
+                   animeSeason.getYear().equals(year);
+        })
+        .collect(Collectors.toList());
+     }
 
     public void addFavoriteAnime(String animeId, String userId) {
         logger.info("Looking for user with ID: " + userId);

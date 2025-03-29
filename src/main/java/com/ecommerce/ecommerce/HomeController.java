@@ -95,6 +95,8 @@ public class HomeController {
     public String showAnimeBySeason(@RequestParam("season") String season, @RequestParam("year") Integer year, Model model) {
         List<Anime> animeBySeason = animeService.getAnimeBySeason(season, year);
         model.addAttribute("list", animeBySeason);
+        model.addAttribute("selectedSeason", season); // ← 追加
+        model.addAttribute("selectedYear", year);
         return "animeList"; // Reuse the animeList template
     }
 
